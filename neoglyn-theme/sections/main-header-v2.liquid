@@ -1,0 +1,204 @@
+{%- style -%}
+.header-wrapper-v2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 250;
+  transition: background-color 0.3s ease, border-bottom 0.3s ease;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.header-wrapper-v2.is-scrolled {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.header-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  max-width: var(--page-width, 1400px);
+  margin: 0 auto;
+}
+
+.header-v2__logo {
+  font-family: var(--font-heading-family);
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: var(--color-foreground);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.header-v2__nav {
+  display: none;
+}
+
+@media screen and (min-width: 990px) {
+  .header-v2__nav {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
+}
+
+.header-v2__nav-link {
+  color: var(--color-metallic);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.header-v2__nav-link:hover {
+  color: var(--color-foreground);
+}
+
+.header-v2__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.header-v2__nav-link:hover::after {
+  width: 100%;
+}
+
+.header-v2__icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-v2__icon {
+  color: var(--color-foreground);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.header-v2__icon:hover {
+  color: var(--color-accent);
+}
+
+.header-v2__menu-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-foreground);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (min-width: 990px) {
+  .header-v2__menu-btn {
+    display: none;
+  }
+}
+{%- endstyle -%}
+
+<header class="header-wrapper-v2" id="SiteHeaderV2">
+  <div class="header-v2">
+    <!-- Mobile Menu Button -->
+    <button class="header-v2__menu-btn" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Logo -->
+    <a href="{{ routes.root_url }}" class="header-v2__logo">
+      {{ shop.name }}
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="header-v2__nav">
+      {%- for link in linklists.main-menu.links -%}
+        <a href="{{ link.url }}" class="header-v2__nav-link">
+          {{ link.title | escape }}
+        </a>
+      {%- endfor -%}
+      <a href="#science" class="header-v2__nav-link">The Science</a>
+      <a href="{{ routes.all_products_collection_url }}" class="header-v2__nav-link">Shop All</a>
+    </nav>
+
+    <!-- Icons Container -->
+    <div class="header-v2__icons">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header-v2__icon d-none-mobile">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="header-v2__icon" id="cart-icon-bubble">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        {%- if cart != empty -%}
+          <span class="cart-count-bubble" style="background:var(--color-accent); color:var(--color-primary); border-radius:50%; font-size:10px; width:16px; height:16px; display:flex; align-items:center; justify-content:center; margin-left:-8px; margin-top:-10px; font-weight:bold;">
+            {%- if cart.item_count < 100 -%}
+              {{ cart.item_count }}
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('SiteHeaderV2');
+    if (!header) return;
+    
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check on initial load
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Glassmorphism Header",
+  "class": "section-header-v2",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Glassmorphism Header",
+      "category": "Header Elements"
+    }
+  ]
+}
+{% endschema %}

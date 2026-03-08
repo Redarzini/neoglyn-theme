@@ -1,0 +1,13 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "main-header-v2",
+      "settings": {}
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "hero_v2": {
+      "type": "main-hero-v2",
+      "settings": {
+        "heading": "The Future of Skin Rituals",
+        "text": "Experience the ultimate clinical-grade microcurrent lift. Visible results in just 5 minutes a day.",
+        "btn_1_text": "SHOP THE PRO DEVICE",
+        "btn_1_link": "shopify:\/\/collections\/all",
+        "btn_2_text": "LEARN THE SCIENCE",
+        "btn_2_link": "shopify:\/\/pages\/science"
+      }
+    },
+    "before_after_v2": {
+      "type": "main-before-after-v2",
+      "settings": {
+        "heading": "Clinically Proven Results.",
+        "text": "Drag the slider to see the visible lift and contouring effects after a single 5-minute treatment.",
+        "aspect_ratio": "16/9",
+        "max_width": 1000,
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "hero_v2",
+    "before_after_v2"
+  ]
+}
