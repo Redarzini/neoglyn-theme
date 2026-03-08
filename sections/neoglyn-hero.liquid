@@ -1,0 +1,372 @@
+{%- style -%}
+.neoglyn-hero-{{ section.id }} {
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  background-color: {{ section.settings.primary_color }};
+}
+.neoglyn-hero__bg-gradient-{{ section.id }} {
+  background: linear-gradient(to right, {{ section.settings.primary_color }}, {{ section.settings.primary_color | color_modify: 'alpha', 0.6 }}, transparent);
+}
+.neoglyn-hero__badge-{{ section.id }} {
+  background-color: {{ section.settings.accent_color | color_modify: 'alpha', 0.2 }};
+  color: {{ section.settings.accent_color }};
+  border-color: {{ section.settings.accent_color | color_modify: 'alpha', 0.3 }};
+}
+.neoglyn-hero__title-highlight-{{ section.id }} {
+  color: {{ section.settings.accent_color }};
+}
+.neoglyn-hero__btn-primary-{{ section.id }} {
+  background-color: {{ section.settings.accent_color }};
+  color: {{ section.settings.primary_color }};
+  box-shadow: 0 20px 25px -5px {{ section.settings.accent_color | color_modify: 'alpha', 0.2 }}, 0 10px 10px -5px {{ section.settings.accent_color | color_modify: 'alpha', 0.1 }};
+}
+.neoglyn-hero__btn-primary-{{ section.id }}:hover {
+  background-color: {{ section.settings.accent_color | color_darken: 10 }};
+}
+.neoglyn-hero__indicator--active-{{ section.id }} {
+  background-color: {{ section.settings.accent_color }};
+}
+{%- endstyle -%}
+
+{{ 'component-neoglyn-hero.css' | asset_url | stylesheet_tag }}
+
+<style>
+/* 
+  BEM CSS - Normally this would be in component-neoglyn-hero.css, but 
+  placed here for portability. 
+*/
+.neoglyn-hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  font-family: 'Manrope', sans-serif;
+  overflow: hidden;
+}
+
+.neoglyn-hero__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.neoglyn-hero__bg-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.neoglyn-hero__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.neoglyn-hero__container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 20;
+}
+
+.neoglyn-hero__content {
+  max-width: 42rem;
+}
+
+.neoglyn-hero__badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid transparent; /* Overridden dynamically */
+  backdrop-filter: blur(4px);
+  margin-bottom: 32px;
+}
+
+.neoglyn-hero__title {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  margin-bottom: 32px;
+}
+
+.neoglyn-hero__text {
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  color: #E2E8F0;
+  max-width: 32rem;
+  font-weight: 300;
+  line-height: 1.625;
+  margin-bottom: 32px;
+}
+
+.neoglyn-hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+@media (min-width: 640px) {
+  .neoglyn-hero__actions {
+    flex-direction: row;
+  }
+}
+
+.neoglyn-hero__btn-primary {
+  font-weight: 800;
+  padding: 16px 40px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.neoglyn-hero__btn-primary:hover {
+  transform: scale(1.05);
+}
+
+.neoglyn-hero__btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 16px 40px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neoglyn-hero__btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.neoglyn-hero__indicators {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 30;
+}
+
+.neoglyn-hero__indicator {
+  width: 48px;
+  height: 4px;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.neoglyn-hero__indicator:hover:not([class*="--active"]) {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+</style>
+
+<div class="neoglyn-hero neoglyn-hero-{{ section.id }}">
+  <div class="neoglyn-hero__bg" style="opacity: {{ section.settings.background_opacity | divided_by: 100.0 }};">
+    <div class="neoglyn-hero__bg-gradient neoglyn-hero__bg-gradient-{{ section.id }}"></div>
+    {%- if section.settings.background_image != blank -%}
+      <img src="{{ section.settings.background_image | img_url: 'master' }}" alt="{{ section.settings.background_image.alt | escape }}" class="neoglyn-hero__bg-image">
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'neoglyn-hero__bg-image' }}
+    {%- endif -%}
+  </div>
+
+  <div class="neoglyn-hero__container">
+    <div class="neoglyn-hero__content">
+      {%- if section.settings.badge_text != blank -%}
+        <span class="neoglyn-hero__badge neoglyn-hero__badge-{{ section.id }}">
+          {{ section.settings.badge_text }}
+        </span>
+      {%- endif -%}
+
+      <h1 class="neoglyn-hero__title">
+        {{ section.settings.title_part_1 }}
+        <span class="neoglyn-hero__title-highlight neoglyn-hero__title-highlight-{{ section.id }}">{{ section.settings.title_highlight }}</span>
+      </h1>
+
+      {%- if section.settings.description != blank -%}
+        <p class="neoglyn-hero__text">
+          {{ section.settings.description }}
+        </p>
+      {%- endif -%}
+
+      <div class="neoglyn-hero__actions">
+        {%- if section.settings.primary_btn_text != blank -%}
+          <a href="{{ section.settings.primary_btn_link | default: '#' }}" class="neoglyn-hero__btn-primary neoglyn-hero__btn-primary-{{ section.id }}">
+            {{ section.settings.primary_btn_text }} 
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/-2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.secondary_btn_text != blank -%}
+          <a href="{{ section.settings.secondary_btn_link | default: '#' }}" class="neoglyn-hero__btn-secondary">
+            {{ section.settings.secondary_btn_text }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="neoglyn-hero__indicators">
+    <button class="neoglyn-hero__indicator neoglyn-hero__indicator--active neoglyn-hero__indicator--active-{{ section.id }}" aria-label="Slide 1"></button>
+    <button class="neoglyn-hero__indicator" aria-label="Slide 2"></button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Hero Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image & Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 60,
+      "label": "Background Image Opacity (%)"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#001F3F"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#82D9B9"
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "New Arrival: Lumina Pro II"
+    },
+    {
+      "type": "text",
+      "id": "title_part_1",
+      "label": "Title (White Part)",
+      "default": "Redefine Your"
+    },
+    {
+      "type": "text",
+      "id": "title_highlight",
+      "label": "Title (Accent Highlight)",
+      "default": "Beauty Ritual"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Experience clinical-grade skincare technology from the comfort of your home. Visible results, professional precision."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_text",
+      "label": "Primary Button Text",
+      "default": "SHOP COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_btn_text",
+      "label": "Secondary Button Text",
+      "default": "WATCH DEMO"
+    },
+    {
+      "type": "url",
+      "id": "secondary_btn_link",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Hero Section",
+      "category": "Hero Elements"
+    }
+  ]
+}
+{% endschema %}

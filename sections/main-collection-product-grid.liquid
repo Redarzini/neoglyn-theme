@@ -1,0 +1,123 @@
+{{ 'neoglyn-collection.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-collection page-width">
+  <div class="neoglyn-collection__header">
+    <nav class="neoglyn-collection__breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="material-symbols-outlined">chevron_right</span>
+      <a href="{{ routes.collections_url }}">Collections</a>
+      <span class="material-symbols-outlined">chevron_right</span>
+      <span class="neoglyn-collection__breadcrumb-current">{{ collection.title | default: 'Precision Devices' }}</span>
+    </nav>
+    
+    <div class="neoglyn-collection__title-bar">
+      <div>
+        <h2 class="neoglyn-collection__title">{{ collection.title | default: 'Precision Devices' }}</h2>
+        <p class="neoglyn-collection__description">
+          {{ collection.description | default: 'Clinically-proven technology engineered for professional results at home. Discover our range of FDA-cleared microcurrent, LED, and ultrasonic tools.' }}
+        </p>
+      </div>
+      <div class="neoglyn-collection__controls">
+        <button class="neoglyn-collection__control-btn">
+          <span class="material-symbols-outlined">tune</span>
+          Filter
+        </button>
+        <button class="neoglyn-collection__control-btn">
+          Sort By: Featured
+          <span class="material-symbols-outlined">expand_more</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="neoglyn-collection__badges">
+    <button class="neoglyn-collection__badge-btn neoglyn-collection__badge-btn--active">All Products</button>
+    <button class="neoglyn-collection__badge-btn neoglyn-collection__badge-btn--inactive">Microcurrent</button>
+    <button class="neoglyn-collection__badge-btn neoglyn-collection__badge-btn--inactive">LED Light Therapy</button>
+    <button class="neoglyn-collection__badge-btn neoglyn-collection__badge-btn--inactive">Cryotherapy</button>
+    <button class="neoglyn-collection__badge-btn neoglyn-collection__badge-btn--inactive">Ultrasonic</button>
+  </div>
+
+  <div class="neoglyn-collection__grid">
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- for product in collection.products -%}
+        <a href="{{ product.url }}" class="neoglyn-product-card group">
+          <div class="neoglyn-product-card__image-wrapper">
+            {%- if product.metafields.custom.badge != blank -%}
+              <span class="neoglyn-product-card__tag neoglyn-product-card__tag--mint">{{ product.metafields.custom.badge }}</span>
+            {%- elsif forloop.index == 1 -%}
+              <span class="neoglyn-product-card__tag neoglyn-product-card__tag--mint">Top Seller</span>
+            {%- elsif forloop.index == 2 -%}
+              <span class="neoglyn-product-card__tag">New Arrival</span>
+            {%- endif -%}
+            
+            {%- if product.featured_image -%}
+              {{ product.featured_image | image_url: width: 600 | image_tag: class: 'neoglyn-product-card__image' }}
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'neoglyn-product-card__image' }}
+            {%- endif -%}
+
+            <div class="neoglyn-product-card__quick-add">
+              {%- form 'product', product -%}
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <button type="submit" name="add" class="neoglyn-product-card__quick-add-btn"{% unless product.available %} disabled{% endunless %}>
+                  {%- if product.available -%}Quick Add{%- else -%}Sold Out{%- endif -%}
+                </button>
+              {%- endform -%}
+            </div>
+          </div>
+          
+          <div class="neoglyn-product-card__info">
+            <p class="neoglyn-product-card__vendor">{{ product.vendor | default: 'Clinical Care' }}</p>
+            <h3 class="neoglyn-product-card__title">{{ product.title }}</h3>
+            <div class="neoglyn-product-card__bottom">
+              <span class="neoglyn-product-card__price">{{ product.price | money }}</span>
+              <div class="neoglyn-product-card__reviews">
+                <span class="material-symbols-outlined fill-1">star</span>
+                <span class="material-symbols-outlined fill-1">star</span>
+                <span class="material-symbols-outlined fill-1">star</span>
+                <span class="material-symbols-outlined fill-1">star</span>
+                <span class="material-symbols-outlined fill-1">star</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      {%- else -%}
+        <p>No products found in this collection.</p>
+      {%- endfor -%}
+  </div>
+
+  {%- if paginate.pages > 1 -%}
+    <div class="neoglyn-collection__pagination">
+      <p class="neoglyn-collection__pagination-text">Showing {{ paginate.current_offset | plus: collection.products.size }} of {{ paginate.items }} results</p>
+      <div class="neoglyn-collection__progress-bar">
+        {%- assign progress = paginate.current_offset | plus: collection.products.size | times: 100.0 | divided_by: paginate.items -%}
+        <div class="neoglyn-collection__progress" style="width: {{ progress }}%;"></div>
+      </div>
+      {%- if paginate.next -%}
+        <a href="{{ paginate.next.url }}" class="neoglyn-collection__load-more">Load More Devices</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  {%- endpaginate -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Collection Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 8,
+      "label": "Products per page"
+    }
+  ]
+}
+{% endschema %}

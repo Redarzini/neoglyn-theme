@@ -1,0 +1,111 @@
+{{ 'neoglyn-quiz.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-quiz page-width">
+  <div class="neoglyn-quiz__container">
+    
+    <div class="neoglyn-quiz__progress">
+      <div class="neoglyn-quiz__progress-header">
+        <div>
+          <span class="neoglyn-quiz__progress-status">Assessment in progress</span>
+          <h3 class="neoglyn-quiz__progress-title">Skin Vitality Analysis</h3>
+        </div>
+        <span class="neoglyn-quiz__progress-step">Step 2 of 4</span>
+      </div>
+      <div class="neoglyn-quiz__progress-bar">
+        <div class="neoglyn-quiz__progress-fill" style="width: 50%;"></div>
+      </div>
+    </div>
+
+    <div class="neoglyn-quiz__panel">
+      <div class="neoglyn-quiz__header">
+        <h1 class="neoglyn-quiz__title">{{ section.settings.heading | default: 'What are your primary skin concerns?' }}</h1>
+        <p class="neoglyn-quiz__desc">{{ section.settings.description | default: 'Select all that apply for a clinical-grade personalized regimen.' }}</p>
+      </div>
+
+      <div class="neoglyn-quiz__options">
+        {%- for block in section.blocks -%}
+          <button class="neoglyn-quiz__option" onclick="this.classList.toggle('neoglyn-quiz__option--selected')">
+            <div class="neoglyn-quiz__option-content">
+              <span class="material-symbols-outlined neoglyn-quiz__option-icon">{{ block.settings.icon | default: 'auto_awesome' }}</span>
+              <div>
+                <p class="neoglyn-quiz__option-title">{{ block.settings.title }}</p>
+                <p class="neoglyn-quiz__option-desc">{{ block.settings.description }}</p>
+              </div>
+            </div>
+            <div class="neoglyn-quiz__option-check">
+              <span class="material-symbols-outlined">check</span>
+            </div>
+          </button>
+        {%- endfor -%}
+      </div>
+
+      <div class="neoglyn-quiz__footer">
+        <button class="neoglyn-quiz__btn-back">
+          <span class="material-symbols-outlined">arrow_back</span>
+          Back
+        </button>
+        <button class="neoglyn-quiz__btn-next">Continue to Next Step</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Skin Quiz",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What are your primary skin concerns?"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Select all that apply for a clinical-grade personalized regimen."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quiz_option",
+      "name": "Quiz Option",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon ID",
+          "default": "auto_awesome"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Loss of Firmness"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Reduced elasticity and sagging"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Skin Quiz",
+      "blocks": [
+        { "type": "quiz_option", "settings": {"title": "Loss of Firmness", "icon": "auto_awesome"} },
+        { "type": "quiz_option", "settings": {"title": "Fine Lines", "icon": "waves"} },
+        { "type": "quiz_option", "settings": {"title": "Dullness", "icon": "light_mode"} },
+        { "type": "quiz_option", "settings": {"title": "Dehydration", "icon": "water_drop"} }
+      ]
+    }
+  ]
+}
+{% endschema %}

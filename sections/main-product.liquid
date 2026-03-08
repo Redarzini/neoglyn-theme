@@ -1,0 +1,188 @@
+{{ 'neoglyn-pdp.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-pdp page-width" id="ProductInfo-{{ section.id }}">
+  
+  <nav class="neoglyn-pdp__breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span class="material-symbols-outlined">chevron_right</span>
+    {%- if collection -%}
+      <a href="{{ collection.url }}">{{ collection.title }}</a>
+      <span class="material-symbols-outlined">chevron_right</span>
+    {%- endif -%}
+    <span class="neoglyn-pdp__breadcrumb-current">{{ product.title }}</span>
+  </nav>
+
+  <div class="neoglyn-pdp__container">
+    
+    <div class="neoglyn-pdp__media">
+      <div class="neoglyn-pdp__media-grid">
+        {%- for media in product.media -%}
+          <div class="neoglyn-pdp__media-item">
+            {{ media | image_url: width: 800 | image_tag: alt: media.alt }}
+          </div>
+        {%- else -%}
+          <div class="neoglyn-pdp__media-item">
+            {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+          <div class="neoglyn-pdp__media-item">
+            {{ 'product-2' | placeholder_svg_tag }}
+          </div>
+          <div class="neoglyn-pdp__media-item">
+            {{ 'product-3' | placeholder_svg_tag }}
+          </div>
+          <div class="neoglyn-pdp__media-item">
+            {{ 'product-4' | placeholder_svg_tag }}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="neoglyn-pdp__info">
+      <div class="neoglyn-pdp__header">
+        <div class="neoglyn-pdp__badge-row">
+          {%- if product.metafields.custom.badge != blank -%}
+            <span class="neoglyn-pdp__badge">{{ product.metafields.custom.badge }}</span>
+          {%- else -%}
+             <span class="neoglyn-pdp__badge">Best Seller</span>
+          {%- endif -%}
+          <div class="neoglyn-pdp__reviews">
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star</span>
+            <span class="neoglyn-pdp__review-text">4.9 (128 Reviews)</span>
+          </div>
+        </div>
+
+        <h1 class="neoglyn-pdp__title">{{ product.title | default: 'Ultra-Lift Pro' }}</h1>
+        <p class="neoglyn-pdp__subtitle">
+           {%- if product.metafields.custom.subtitle != blank -%}
+             {{ product.metafields.custom.subtitle }}
+           {%- else -%}
+             Advanced Micro-Current Rejuvenation System
+           {%- endif -%}
+        </p>
+      </div>
+
+      <div class="neoglyn-pdp__price-wrap" id="price-{{ section.id }}">
+        <span class="neoglyn-pdp__price">{{ product.price | default: 49900 | money }}</span>
+        {%- if product.compare_at_price > product.price -%}
+          <span class="neoglyn-pdp__compare-price">{{ product.compare_at_price | money }}</span>
+          {%- assign save_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+          <span class="neoglyn-pdp__savings">Save {{ save_percent }}%</span>
+        {%- elsif product.compare_at_price == blank and product.price == blank -%}
+           <span class="neoglyn-pdp__compare-price">$650.00</span>
+           <span class="neoglyn-pdp__savings">Save 23%</span>
+        {%- endif -%}
+      </div>
+
+      {%- unless product.has_only_default_variant -%}
+        <div class="neoglyn-pdp__variants">
+          <p class="neoglyn-pdp__variant-label">Select Finish</p>
+          <div class="neoglyn-pdp__variant-picker">
+            <button class="neoglyn-pdp__swatch neoglyn-pdp__swatch--active" style="background-color: #E5E7E9;"></button>
+            <button class="neoglyn-pdp__swatch" style="background-color: var(--color-primary);"></button>
+            <button class="neoglyn-pdp__swatch" style="background-color: #E5D3D0;"></button>
+          </div>
+        </div>
+      {%- endunless -%}
+
+      <product-form>
+        {%- form 'product', product, id: "product-form" -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          
+          <div class="neoglyn-pdp__form-grid">
+            <div class="neoglyn-pdp__input-group">
+              <label class="neoglyn-pdp__variant-label">Quantity</label>
+              <div class="neoglyn-pdp__qty">
+                <button type="button" class="neoglyn-pdp__qty-btn" onclick="this.nextElementSibling.stepDown()">
+                  <span class="material-symbols-outlined">remove</span>
+                </button>
+                <input type="number" name="quantity" value="1" min="1" class="neoglyn-pdp__qty-input">
+                <button type="button" class="neoglyn-pdp__qty-btn" onclick="this.previousElementSibling.stepUp()">
+                  <span class="material-symbols-outlined">add</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="neoglyn-pdp__input-group">
+              <label class="neoglyn-pdp__variant-label">Warranty</label>
+              <select name="properties[Warranty]" class="neoglyn-pdp__select">
+                <option value="2-Year Standard">2-Year Standard</option>
+                <option value="3-Year Premium">3-Year Premium (+$49)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="neoglyn-pdp__actions">
+            <button type="submit" name="add" class="neoglyn-pdp__btn-add"{% if product.selected_or_first_available_variant.available == false %} disabled{% endif %}>
+              {%- if product.selected_or_first_available_variant.available -%}
+                ADD TO CART
+              {%- else -%}
+                SOLD OUT
+              {%- endif -%}
+            </button>
+            {%- if section.settings.show_dynamic_checkout -%}
+              {{ form | payment_button }}
+            {%- else -%}
+              <button type="button" class="neoglyn-pdp__btn-buy">
+                BUY WITH <span style="font-style: italic; font-weight: 900;">ShopPay</span>
+              </button>
+            {%- endif -%}
+          </div>
+        {%- endform -%}
+      </product-form>
+
+      <div class="neoglyn-pdp__features">
+        <div class="neoglyn-pdp__feature">
+          <span class="material-symbols-outlined neoglyn-pdp__feature-icon">local_shipping</span>
+          <div>
+            <p class="neoglyn-pdp__feature-title">Free Express Shipping</p>
+            <p class="neoglyn-pdp__feature-desc">Orders over $150</p>
+          </div>
+        </div>
+        <div class="neoglyn-pdp__feature">
+          <span class="material-symbols-outlined neoglyn-pdp__feature-icon">verified_user</span>
+          <div>
+            <p class="neoglyn-pdp__feature-title">FDA Approved</p>
+            <p class="neoglyn-pdp__feature-desc">Clinically Proven Results</p>
+          </div>
+        </div>
+        <div class="neoglyn-pdp__feature">
+          <span class="material-symbols-outlined neoglyn-pdp__feature-icon">history</span>
+          <div>
+            <p class="neoglyn-pdp__feature-title">90-Day Guarantee</p>
+            <p class="neoglyn-pdp__feature-desc">Risk-free trial</p>
+          </div>
+        </div>
+        <div class="neoglyn-pdp__feature">
+          <span class="material-symbols-outlined neoglyn-pdp__feature-icon">support_agent</span>
+          <div>
+            <p class="neoglyn-pdp__feature-title">Expert Support</p>
+            <p class="neoglyn-pdp__feature-desc">24/7 Skin consultation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Neoglyn Product Details",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

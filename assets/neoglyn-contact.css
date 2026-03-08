@@ -1,0 +1,313 @@
+.neoglyn-contact {
+  background-color: var(--color-background-light);
+  padding: 48px 0 96px;
+}
+
+/* Hero */
+.neoglyn-contact__hero {
+  position: relative;
+  min-height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 48px;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.neoglyn-contact__hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.neoglyn-contact__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 31, 63, 0.7) 0%, rgba(0, 31, 63, 0.2) 50%);
+  z-index: 10;
+}
+
+.neoglyn-contact__hero-content {
+  position: relative;
+  z-index: 20;
+  padding: 32px;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-contact__hero-content {
+    padding: 48px;
+  }
+}
+
+.neoglyn-contact__hero-title {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-contact__hero-title {
+    font-size: 48px;
+  }
+}
+
+.neoglyn-contact__hero-desc {
+  color: var(--color-accent);
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Grid Layout */
+.neoglyn-contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-contact__grid {
+    grid-template-columns: 4fr 8fr;
+  }
+}
+
+/* Contact Info Sidebar */
+.neoglyn-contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.neoglyn-contact__info-title {
+  color: var(--color-primary);
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+.neoglyn-contact__info-desc {
+  color: rgba(0,31,63,0.6);
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
+
+.neoglyn-contact__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.neoglyn-contact__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 16px;
+  background-color: #fff;
+  border: 1px solid rgba(0,31,63,0.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.neoglyn-contact__card-icon {
+  background-color: rgba(130, 217, 185, 0.2);
+  color: var(--color-primary);
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neoglyn-contact__card-icon span {
+  font-size: 24px;
+}
+
+.neoglyn-contact__card-content {
+  flex: 1;
+}
+
+.neoglyn-contact__card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 4px;
+}
+
+.neoglyn-contact__card-text {
+  font-size: 14px;
+  color: rgba(0,31,63,0.5);
+  margin: 0;
+}
+
+.neoglyn-contact__socials {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.neoglyn-contact__social-link {
+  color: rgba(0,31,63,0.4);
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.neoglyn-contact__social-link:hover {
+  color: var(--color-accent);
+}
+
+/* Form Area */
+.neoglyn-contact__form-wrapper {
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,31,63,0.05);
+}
+
+@media (min-width: 768px) {
+  .neoglyn-contact__form-wrapper {
+    padding: 48px;
+  }
+}
+
+.neoglyn-contact__form-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 32px;
+}
+
+.neoglyn-contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.neoglyn-contact__form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-contact__form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.neoglyn-contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.neoglyn-contact__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0,31,63,0.7);
+}
+
+.neoglyn-contact__input,
+.neoglyn-contact__textarea {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--color-background-light);
+  border: 1px solid transparent;
+  color: var(--color-primary);
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.neoglyn-contact__input:focus,
+.neoglyn-contact__textarea:focus {
+  outline: none;
+  background-color: #fff;
+  border-color: rgba(130, 217, 185, 0.5);
+  box-shadow: 0 0 0 4px rgba(130, 217, 185, 0.1);
+}
+
+.neoglyn-contact__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.neoglyn-contact__submit {
+  width: 100%;
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.3s ease;
+}
+
+.neoglyn-contact__submit:hover {
+  opacity: 0.9;
+}
+
+.neoglyn-contact__submit span {
+  font-size: 20px;
+}
+
+.neoglyn-contact__successMessage {
+  background-color: rgba(130, 217, 185, 0.2);
+  color: var(--color-primary);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Badges */
+.neoglyn-contact__badges {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(0,31,63,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0.6;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-contact__badges {
+    justify-content: space-between;
+  }
+}
+
+.neoglyn-contact__badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-primary);
+}
+
+.neoglyn-contact__badge span:first-child {
+  font-size: 32px;
+}
+
+.neoglyn-contact__badge span:last-child {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

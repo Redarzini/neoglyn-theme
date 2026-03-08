@@ -1,0 +1,176 @@
+{{ 'neoglyn-account.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-account">
+  <div class="page-width">
+    
+    <!-- Hero Welcome Section -->
+    <section class="neoglyn-account__hero">
+      <div class="neoglyn-account__greeting-wrapper">
+        <h1 class="neoglyn-account__title">
+          Hello, {{ customer.first_name | default: 'Member' }}!
+          <span class="neoglyn-account__title-sub">Ready for your glow up?</span>
+        </h1>
+        <p class="neoglyn-account__subtitle">Your personalized curation of beauty essentials and exclusive club rewards is waiting for you.</p>
+      </div>
+      
+      <div class="neoglyn-account__actions">
+        <a href="{{ routes.all_products_collection_url }}" class="neoglyn-account__btn-shop">Shop New Drops</a>
+        <a href="{{ routes.account_addresses_url }}" class="neoglyn-account__btn-logout">Settings</a>
+        <a href="{{ routes.account_logout_url }}" class="neoglyn-account__btn-logout">Logout</a>
+      </div>
+    </section>
+
+    <!-- Rewards Grid -->
+    <section class="neoglyn-account__rewards-grid">
+      
+      <div class="neoglyn-account__reward-card">
+        <div>
+          <span class="material-symbols-outlined neoglyn-account__reward-icon">group_add</span>
+          <h3 class="neoglyn-account__reward-label">Referral Status</h3>
+          <p class="neoglyn-account__reward-value">0 Pending</p>
+        </div>
+        <div class="neoglyn-account__reward-footer">
+          <p class="neoglyn-account__reward-subtext">Invite friends to unlock Diamond Tier.</p>
+        </div>
+      </div>
+
+      <div class="neoglyn-account__reward-card neoglyn-account__reward-card--highlight">
+        <div class="neoglyn-account__reward-card-glow"></div>
+        <div>
+          <span class="material-symbols-outlined neoglyn-account__reward-icon">account_balance_wallet</span>
+          <h3 class="neoglyn-account__reward-label">Earned Credits</h3>
+          <p class="neoglyn-account__reward-value">$0.00</p>
+        </div>
+        <button class="neoglyn-account__reward-btn">Redeem Now</button>
+      </div>
+
+      <div class="neoglyn-account__reward-card">
+        <div>
+          <span class="material-symbols-outlined neoglyn-account__reward-icon">card_membership</span>
+          <h3 class="neoglyn-account__reward-label">Club Points</h3>
+          <p class="neoglyn-account__reward-value">0 pts</p>
+        </div>
+        <div class="neoglyn-account__reward-footer">
+          <div class="neoglyn-account__progress-bar">
+            <div class="neoglyn-account__progress-fill" style="width: 5%;"></div>
+          </div>
+          <p class="neoglyn-account__reward-subtext">500 points until next reward</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Orders & Sidebar Layout -->
+    <div class="neoglyn-account__main-grid">
+      
+      <!-- Order History List -->
+      <section>
+        <div class="neoglyn-account__orders-header">
+          <h2 class="neoglyn-account__section-title">Recent Orders</h2>
+        </div>
+        
+        <div class="neoglyn-account__orders-list">
+          {% paginate customer.orders by 20 %}
+            {%- if customer.orders.size > 0 -%}
+              {%- for order in customer.orders limit: 3 -%}
+                <div class="neoglyn-account__order-item">
+                  <div class="neoglyn-account__order-details">
+                    <div class="neoglyn-account__order-icon">
+                      <span class="material-symbols-outlined">inventory_2</span>
+                    </div>
+                    <div class="neoglyn-account__order-info">
+                      <h4>Order {{ order.name }}</h4>
+                      <p class="neoglyn-account__order-meta">Ordered {{ order.created_at | time_tag: format: 'date' }}</p>
+                      
+                      {%- if order.fulfillment_status == 'fulfilled' -%}
+                        <span class="neoglyn-account__order-status neoglyn-account__order-status--fulfilled">Delivered</span>
+                      {%- else -%}
+                        <span class="neoglyn-account__order-status neoglyn-account__order-status--unfulfilled">In Progress</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                  <div class="neoglyn-account__order-actions">
+                    <p class="neoglyn-account__order-price">{{ order.total_price | money }}</p>
+                    <a href="{{ order.customer_url }}" class="neoglyn-account__order-link">
+                      Order Details <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+               <div class="neoglyn-account__empty">
+                 <p>You haven't placed any orders yet.</p>
+               </div>
+            {%- endif -%}
+          {% endpaginate %}
+        </div>
+      </section>
+
+      <!-- Exclusive Offers Sidebar -->
+      <section class="neoglyn-account__exclusives">
+        <h2 class="neoglyn-account__section-title">Member Exclusives</h2>
+        
+        <div class="neoglyn-account__offer-card">
+          {%- if section.settings.offer_image_1 != blank -%}
+             {{ section.settings.offer_image_1 | image_url: width: 600 | image_tag: class: 'neoglyn-account__offer-img' }}
+          {%- else -%}
+             {{ 'product-3' | placeholder_svg_tag: 'neoglyn-account__offer-img' }}
+          {%- endif -%}
+          <div class="neoglyn-account__offer-overlay"></div>
+          <span class="neoglyn-account__offer-badge">Early Access</span>
+          <div class="neoglyn-account__offer-content">
+            <h4 class="neoglyn-account__offer-title">SonicInfuse Gen 3</h4>
+            <p class="neoglyn-account__offer-desc">Next-gen hydration delivery. Ships 2 weeks before public launch.</p>
+            <button class="neoglyn-account__offer-btn">Pre-order Now</button>
+          </div>
+        </div>
+
+        <div class="neoglyn-account__offer-card">
+          {%- if section.settings.offer_image_2 != blank -%}
+             {{ section.settings.offer_image_2 | image_url: width: 600 | image_tag: class: 'neoglyn-account__offer-img' }}
+          {%- else -%}
+             {{ 'product-4' | placeholder_svg_tag: 'neoglyn-account__offer-img' }}
+          {%- endif -%}
+          <div class="neoglyn-account__offer-overlay"></div>
+          <span class="neoglyn-account__offer-badge">Limited Edition</span>
+          <div class="neoglyn-account__offer-content">
+            <h4 class="neoglyn-account__offer-title">Silver Wand</h4>
+            <p class="neoglyn-account__offer-desc">Only 100 units reserved for Club Members.</p>
+            <button class="neoglyn-account__offer-btn">Claim Offer</button>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Account Dashboard",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Member Exclusives Offers"
+    },
+    {
+      "type": "image_picker",
+      "id": "offer_image_1",
+      "label": "Offer Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "offer_image_2",
+      "label": "Offer Image 2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Account Dashboard"
+    }
+  ]
+}
+{% endschema %}

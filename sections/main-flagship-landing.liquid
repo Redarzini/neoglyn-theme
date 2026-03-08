@@ -1,0 +1,291 @@
+{{ 'neoglyn-landing.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-landing">
+  <!-- Hero Section -->
+  <section class="neoglyn-landing__hero">
+    <div class="neoglyn-landing__hero-bg">
+      {%- if section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 2000 | image_tag: class: 'neoglyn-landing__hero-image' }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'neoglyn-landing__hero-image' }}
+      {%- endif -%}
+      <div class="neoglyn-landing__hero-overlay"></div>
+    </div>
+    
+    <div class="neoglyn-landing__hero-content">
+      <span class="neoglyn-landing__hero-badge">Clinical Grade Technology</span>
+      <h2 class="neoglyn-landing__hero-title">The Science of <br/><span>Anti-Gravity</span></h2>
+      <p class="neoglyn-landing__hero-desc">
+        Experience the future of lifting technology with the flagship Neoglyn device. Visible clinical results in just 4 weeks.
+      </p>
+      <div class="neoglyn-landing__hero-actions">
+        <a href="#shop" class="neoglyn-landing__btn-primary">Pre-order Now</a>
+        <a href="#science" class="neoglyn-landing__btn-secondary">View Clinical Study</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <section class="neoglyn-landing__results" id="results">
+    <div class="page-width">
+      <div class="neoglyn-landing__results-header">
+        <div>
+          <h2 class="neoglyn-landing__subtitle">Transformation</h2>
+          <h3 class="neoglyn-landing__section-title">Visible Results</h3>
+        </div>
+        <p class="neoglyn-landing__results-desc">Based on a 12-week independent clinical study with 150 participants using the Neoglyn protocol daily.</p>
+      </div>
+
+      <div class="neoglyn-landing__results-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'result_card' -%}
+            <div class="neoglyn-landing__result-card">
+              <div class="neoglyn-landing__result-image-wrapper">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 600 | image_tag: class: 'neoglyn-landing__result-image' }}
+                {%- else -%}
+                  {{ 'product-3' | placeholder_svg_tag: 'neoglyn-landing__result-image' }}
+                {%- endif -%}
+                <div class="neoglyn-landing__result-labels">
+                  <span class="neoglyn-landing__label-before">DAY 1</span>
+                  <span class="neoglyn-landing__label-after">WEEK {{ block.settings.weeks }}</span>
+                </div>
+              </div>
+              <h4 class="neoglyn-landing__result-title">{{ block.settings.title }}</h4>
+              <p class="neoglyn-landing__result-text">{{ block.settings.text }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- Science Section -->
+  <section class="neoglyn-landing__science" id="science">
+    <div class="page-width">
+      <div class="neoglyn-landing__science-header">
+        <h2 class="neoglyn-landing__subtitle">The Neoglyn Protocol</h2>
+        <h3 class="neoglyn-landing__section-title">Science of Radiance</h3>
+      </div>
+
+      <div class="neoglyn-landing__science-grid">
+        <div class="neoglyn-landing__steps">
+          {%- assign step_count = 1 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'protocol_step' -%}
+              <div class="neoglyn-landing__step">
+                <div class="neoglyn-landing__step-number">{{ step_count }}</div>
+                <div>
+                  <h4 class="neoglyn-landing__step-title">{{ block.settings.title }}</h4>
+                  <p class="neoglyn-landing__step-text">{{ block.settings.text }}</p>
+                </div>
+              </div>
+              {%- assign step_count = step_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="neoglyn-landing__video-wrapper">
+          <div class="neoglyn-landing__video-container">
+            {%- if section.settings.video_thumbnail != blank -%}
+              {{ section.settings.video_thumbnail | image_url: width: 800 | image_tag: class: 'neoglyn-landing__video-thumb' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'neoglyn-landing__video-thumb' }}
+            {%- endif -%}
+            <div class="neoglyn-landing__play-btn">
+              <span class="material-symbols-outlined fill-1">play_arrow</span>
+            </div>
+          </div>
+          <div class="neoglyn-landing__video-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Section -->
+  <section class="neoglyn-landing__trust">
+    <div class="page-width">
+      <div class="neoglyn-landing__trust-header">
+        <h2 class="neoglyn-landing__section-title">Why Neoglyn?</h2>
+      </div>
+
+      <div class="neoglyn-landing__table-wrapper">
+        <table class="neoglyn-landing__table">
+          <thead>
+            <tr>
+              <th>Features</th>
+              <th>Neoglyn Elite</th>
+              <th>Standard Devices</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'comparison_row' -%}
+                <tr>
+                  <td>{{ block.settings.feature }}</td>
+                  <td>
+                    {%- if block.settings.neoglyn_val == 'check' -%}
+                      <span class="material-symbols-outlined fill-1">check_circle</span>
+                    {%- else -%}
+                      {{ block.settings.neoglyn_val }}
+                    {%- endif -%}
+                  </td>
+                  <td>{{ block.settings.standard_val | default: '—' }}</td>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="neoglyn-landing__badges">
+        <div class="neoglyn-landing__badge">
+          <span class="material-symbols-outlined">verified</span>
+          <span>FDA CLEARED</span>
+        </div>
+        <div class="neoglyn-landing__badge">
+          <span class="material-symbols-outlined">clinical_notes</span>
+          <span>CLINICALLY PROVEN</span>
+        </div>
+        <div class="neoglyn-landing__badge">
+          <span class="material-symbols-outlined">eco</span>
+          <span>DERMATOLOGIST TESTED</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop CTA Section -->
+  <section class="neoglyn-landing__shop" id="shop">
+    <div class="page-width">
+      <div class="neoglyn-landing__shop-grid">
+        <div class="neoglyn-landing__shop-image-card">
+          <div class="neoglyn-landing__bundle-image-wrapper">
+            {%- if section.settings.bundle_image != blank -%}
+              {{ section.settings.bundle_image | image_url: width: 800 | image_tag: class: 'neoglyn-landing__bundle-image' }}
+            {%- else -%}
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'neoglyn-landing__bundle-image' }}
+            {%- endif -%}
+          </div>
+          <div class="neoglyn-landing__value-tag">BEST VALUE</div>
+        </div>
+
+        <div class="neoglyn-landing__shop-content">
+          <h2 class="neoglyn-landing__bundle-title">{{ section.settings.bundle_title | default: 'Neoglyn Elite Bundle' }}</h2>
+          <div class="neoglyn-landing__bundle-pricing">
+            {%- assign product = all_products[section.settings.featured_product] -%}
+            <span class="neoglyn-landing__price">{{ product.price | default: 49900 | money }}</span>
+            <span class="neoglyn-landing__price-compare">{{ product.compare_at_price | default: 65000 | money }}</span>
+            <span class="neoglyn-landing__price-save">SAVE 25%</span>
+          </div>
+
+          <p class="neoglyn-landing__includes-title">Complete transformation kit includes:</p>
+          <ul class="neoglyn-landing__includes-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'bundle_item' -%}
+                <li class="neoglyn-landing__includes-item">
+                  <span class="material-symbols-outlined font-bold">check</span>
+                  {{ block.settings.text }}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- form 'product', product -%}
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+            <button type="submit" name="add" class="neoglyn-landing__shop-btn"{% unless product.available %} disabled{% endunless %}>
+              {%- if product.available -%}ADD TO CART{%- else -%}SOLD OUT{%- endif -%}
+            </button>
+          {%- endform -%}
+          
+          <p class="neoglyn-landing__guarantee">90-Day Money Back Guarantee • Free Worldwide Shipping</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Landing Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_thumbnail",
+      "label": "Protocol Video Thumbnail"
+    },
+    {
+      "type": "image_picker",
+      "id": "bundle_image",
+      "label": "Bundle Image"
+    },
+    {
+      "type": "text",
+      "id": "bundle_title",
+      "label": "Bundle Title",
+      "default": "Neoglyn Elite Bundle"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured Product for Bundle"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result_card",
+      "name": "Result Card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "weeks", "label": "Weeks", "default": "4" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Jawline Definition" },
+        { "type": "text", "id": "text", "label": "Description", "default": "94% of users reported a more sculpted facial contour." }
+      ]
+    },
+    {
+      "type": "protocol_step",
+      "name": "Protocol Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Cleanse" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Prepare the skin barrier using the Ionic Primer Gel." }
+      ]
+    },
+    {
+      "type": "comparison_row",
+      "name": "Comparison Row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature", "default": "Anti-Gravity Pulse Tech" },
+        { "type": "text", "id": "neoglyn_val", "label": "Neoglyn Value", "default": "check" },
+        { "type": "text", "id": "standard_val", "label": "Standard Value", "default": "—" }
+      ]
+    },
+    {
+      "type": "bundle_item",
+      "name": "Bundle Included Item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Item Text", "default": "Neoglyn Flagship Anti-Gravity Device" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Flagship Landing",
+      "blocks": [
+        { "type": "result_card", "settings": {"title": "Jawline Definition", "weeks": "4"} },
+        { "type": "protocol_step", "settings": {"title": "Cleanse"} },
+        { "type": "comparison_row", "settings": {"feature": "Anti-Gravity Pulse Tech", "neoglyn_val": "check", "standard_val": "—"} },
+        { "type": "bundle_item", "settings": {"text": "Neoglyn Flagship Anti-Gravity Device"} },
+        { "type": "bundle_item", "settings": {"text": "3-Month Supply of Ionic Primer Gel"} }
+      ]
+    }
+  ]
+}
+{% endschema %}

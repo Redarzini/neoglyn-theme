@@ -1,0 +1,159 @@
+{{ 'neoglyn-tracking.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-tracking">
+  <div class="neoglyn-tracking__container">
+    
+    <!-- Tracking Card -->
+    <div class="neoglyn-tracking__card">
+      <div class="neoglyn-tracking__visual">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: class: 'neoglyn-tracking__visual-img' }}
+        {%- else -%}
+          {{ 'product-apparel-1' | placeholder_svg_tag: 'neoglyn-tracking__visual-img' }}
+        {%- endif -%}
+        <div class="neoglyn-tracking__visual-overlay"></div>
+        <div class="neoglyn-tracking__visual-text">
+          <h3 class="neoglyn-tracking__visual-title">Clinical Precision</h3>
+          <p class="neoglyn-tracking__visual-desc">Your journey to radiant skin is being handled with the utmost care. Track your professional-grade beauty solution from our lab to your door.</p>
+        </div>
+      </div>
+
+      <div class="neoglyn-tracking__form-area">
+        <div class="neoglyn-tracking__header">
+          <h1 class="neoglyn-tracking__title">{{ section.settings.title | default: 'Track Your Order' }}</h1>
+          <p class="neoglyn-tracking__subtitle">Enter your shipment details to see real-time updates.</p>
+        </div>
+
+        <form class="neoglyn-tracking__form" action="/apps/track" method="get">
+          <div class="neoglyn-tracking__field">
+            <label class="neoglyn-tracking__label">Order Number</label>
+            <div class="neoglyn-tracking__input-wrapper">
+              <span class="material-symbols-outlined neoglyn-tracking__icon">tag</span>
+              <input type="text" name="order" class="neoglyn-tracking__input" placeholder="e.g. #NG-98765" required>
+            </div>
+          </div>
+
+          <div class="neoglyn-tracking__field">
+            <label class="neoglyn-tracking__label">Email Address</label>
+            <div class="neoglyn-tracking__input-wrapper">
+              <span class="material-symbols-outlined neoglyn-tracking__icon">mail</span>
+              <input type="email" name="email" class="neoglyn-tracking__input" placeholder="customer@example.com" required>
+            </div>
+          </div>
+
+          <button type="submit" class="neoglyn-tracking__submit">
+            TRACK SHIPMENT
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </form>
+
+        <div class="neoglyn-tracking__help">
+          Need help? <a href="/pages/contact">Contact Neoglyn Concierge</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Journey Indicator Mockup -->
+    <div class="neoglyn-tracking__journey">
+      <h4 class="neoglyn-tracking__journey-title">Live Shipment Journey</h4>
+      
+      <div class="neoglyn-tracking__timeline">
+        <div class="neoglyn-tracking__line-bg"></div>
+        <div class="neoglyn-tracking__line-active"></div>
+
+        <div class="neoglyn-tracking__step neoglyn-tracking__step--completed">
+          <div class="neoglyn-tracking__step-icon">
+            <span class="material-symbols-outlined font-bold">check</span>
+          </div>
+          <div class="neoglyn-tracking__step-info">
+            <span class="neoglyn-tracking__step-label">Order Placed</span>
+            <span class="neoglyn-tracking__step-meta">Processing</span>
+          </div>
+        </div>
+
+        <div class="neoglyn-tracking__step neoglyn-tracking__step--completed">
+          <div class="neoglyn-tracking__step-icon">
+            <span class="material-symbols-outlined font-bold">package_2</span>
+          </div>
+          <div class="neoglyn-tracking__step-info">
+            <span class="neoglyn-tracking__step-label">Processing</span>
+            <span class="neoglyn-tracking__step-meta">In Warehouse</span>
+          </div>
+        </div>
+
+        <div class="neoglyn-tracking__step neoglyn-tracking__step--pending">
+          <div class="neoglyn-tracking__step-icon">
+            <span class="material-symbols-outlined font-bold">local_shipping</span>
+          </div>
+          <div class="neoglyn-tracking__step-info">
+            <span class="neoglyn-tracking__step-label">Shipped</span>
+            <span class="neoglyn-tracking__step-meta">In Transit</span>
+          </div>
+        </div>
+
+        <div class="neoglyn-tracking__step neoglyn-tracking__step--pending">
+          <div class="neoglyn-tracking__step-icon">
+            <span class="material-symbols-outlined font-bold">home</span>
+          </div>
+          <div class="neoglyn-tracking__step-info">
+            <span class="neoglyn-tracking__step-label">Delivered</span>
+            <span class="neoglyn-tracking__step-meta">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reassurance Features -->
+    <div class="neoglyn-tracking__features">
+      <div class="neoglyn-tracking__feature">
+        <span class="material-symbols-outlined neoglyn-tracking__feature-icon">verified_user</span>
+        <div>
+          <h5 class="neoglyn-tracking__feature-title">Authentic Product</h5>
+          <p class="neoglyn-tracking__feature-desc">Directly from Neoglyn certified labs.</p>
+        </div>
+      </div>
+
+      <div class="neoglyn-tracking__feature">
+        <span class="material-symbols-outlined neoglyn-tracking__feature-icon">encrypted</span>
+        <div>
+          <h5 class="neoglyn-tracking__feature-title">Secure Shipping</h5>
+          <p class="neoglyn-tracking__feature-desc">Insured and climate-controlled transit.</p>
+        </div>
+      </div>
+
+      <div class="neoglyn-tracking__feature">
+        <span class="material-symbols-outlined neoglyn-tracking__feature-icon">headset_mic</span>
+        <div>
+          <h5 class="neoglyn-tracking__feature-title">24/7 Concierge</h5>
+          <p class="neoglyn-tracking__feature-desc">Global support for your beauty journey.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Order Tracking",
+  "tag": "section",
+  "settings": [
+    {
+       "type": "image_picker",
+       "id": "image",
+       "label": "Decorative Visual"
+    },
+    {
+       "type": "text",
+       "id": "title",
+       "label": "Heading",
+       "default": "Track Your Order"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Order Tracking"
+    }
+  ]
+}
+{% endschema %}

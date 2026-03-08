@@ -1,0 +1,547 @@
+.neoglyn-about {
+  background-color: var(--color-background-light);
+  overflow: hidden;
+}
+
+/* Hero Section */
+.neoglyn-about__hero {
+  position: relative;
+  height: 80vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.neoglyn-about__img-overlay-left {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--color-background-light) 0%, rgba(246, 248, 247, 0.4) 50%, transparent 100%);
+  z-index: 10;
+}
+
+.neoglyn-about__hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.neoglyn-about__hero-content {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  max-width: 800px;
+}
+
+.neoglyn-about__hero-badge {
+  display: inline-block;
+  padding: 4px 16px;
+  margin-bottom: 24px;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+}
+
+.neoglyn-about__hero-title {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin: 0 0 32px;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__hero-title {
+    font-size: 72px;
+  }
+}
+
+.neoglyn-about__hero-desc {
+  font-size: 18px;
+  color: rgba(0,31,63,0.8);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  font-weight: 300;
+  max-width: 600px;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__hero-desc {
+    font-size: 20px;
+  }
+}
+
+.neoglyn-about__hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.neoglyn-about__btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 16px 40px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.neoglyn-about__btn-primary:hover {
+  box-shadow: 0 20px 25px -5px rgba(0,31,63,0.2);
+  transform: translateY(-2px);
+}
+
+.neoglyn-about__btn-outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 16px 40px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border: 2px solid var(--color-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.neoglyn-about__btn-outline:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* Mission Section (Metallic) */
+.neoglyn-about__mission {
+  background-color: var(--color-metallic);
+  padding: 96px 0;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__mission {
+    padding: 128px 0;
+  }
+}
+
+.neoglyn-about__mission-subtitle {
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  margin: 0 0 48px;
+}
+
+.neoglyn-about__mission-quote {
+  font-size: 30px;
+  font-weight: 300;
+  color: var(--color-primary);
+  line-height: 1.3;
+  max-width: 900px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__mission-quote {
+    font-size: 48px;
+  }
+}
+
+.neoglyn-about__mission-quote span {
+  font-weight: 700;
+  font-style: normal;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.neoglyn-about__mission-divider {
+  margin-top: 64px;
+  display: flex;
+  justify-content: center;
+}
+
+.neoglyn-about__mission-divider::after {
+  content: '';
+  width: 1px;
+  height: 96px;
+  background-color: rgba(0,31,63,0.3);
+}
+
+/* Technology Section */
+.neoglyn-about__tech {
+  padding: 96px 0;
+  background-color: #fff;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__tech {
+    padding: 128px 0;
+  }
+}
+
+.neoglyn-about__tech-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__tech-grid {
+    flex-direction: row;
+  }
+}
+
+.neoglyn-about__tech-content {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__tech-content {
+    width: 50%;
+  }
+}
+
+.neoglyn-about__tech-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--color-primary);
+  margin: 0 0 32px;
+  line-height: 1.1;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__tech-title {
+    font-size: 48px;
+  }
+}
+
+.neoglyn-about__tech-desc {
+  font-size: 18px;
+  color: rgba(0,31,63,0.6);
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
+
+.neoglyn-about__tech-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-about__tech-features {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.neoglyn-about__feature {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.neoglyn-about__feature-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.neoglyn-about__feature:hover .neoglyn-about__feature-icon {
+  transform: scale(1.1);
+}
+
+.neoglyn-about__feature-icon--light {
+  background-color: rgba(0,31,63,0.1);
+  color: var(--color-primary);
+}
+
+.neoglyn-about__feature-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.neoglyn-about__feature-desc {
+  font-size: 14px;
+  color: rgba(0,31,63,0.5);
+  margin: 0;
+}
+
+.neoglyn-about__tech-visual {
+  width: 100%;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__tech-visual {
+    width: 50%;
+  }
+}
+
+.neoglyn-about__tech-img-wrapper {
+  aspect-ratio: 4/5;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0,31,63,0.25);
+}
+
+.neoglyn-about__tech-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.neoglyn-about__tech-stat {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-about__tech-stat {
+    display: block;
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+  }
+}
+
+.neoglyn-about__tech-stat-num {
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.neoglyn-about__tech-stat-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  opacity: 0.8;
+  margin: 8px 0;
+}
+
+.neoglyn-about__tech-stat-sub {
+  font-size: 10px;
+  line-height: 1.2;
+  opacity: 0.6;
+}
+
+/* Promise Section */
+.neoglyn-about__promise {
+  background-color: var(--color-primary);
+  padding: 96px 0;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__promise {
+    padding: 128px 0;
+  }
+}
+
+.neoglyn-about__promise-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 33%;
+  height: 100%;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.neoglyn-about__promise-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 80px;
+  position: relative;
+  z-index: 10;
+}
+
+.neoglyn-about__promise-subtitle {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  margin: 0 0 24px;
+  opacity: 0.7;
+}
+
+.neoglyn-about__promise-title {
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__promise-title {
+    font-size: 48px;
+  }
+}
+
+.neoglyn-about__promise-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-about__promise-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.neoglyn-about__promise-card {
+  padding: 32px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.neoglyn-about__promise-card:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.neoglyn-about__promise-icon {
+  font-size: 36px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 24px;
+}
+
+.neoglyn-about__promise-card span {
+  display: block;
+}
+
+.neoglyn-about__promise-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 16px;
+}
+
+.neoglyn-about__promise-card-text {
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Newsletter CTA */
+.neoglyn-about__cta {
+  background-color: var(--color-metallic);
+  padding: 96px 0;
+}
+
+.neoglyn-about__cta-card {
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-about__cta-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px;
+  }
+}
+
+.neoglyn-about__cta-content {
+  max-width: 500px;
+}
+
+.neoglyn-about__cta-title {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--color-primary);
+  margin: 0 0 16px;
+}
+
+.neoglyn-about__cta-desc {
+  color: rgba(0,31,63,0.6);
+  margin: 0;
+}
+
+.neoglyn-about__cta-form-wrapper {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.neoglyn-about__cta-form {
+  display: flex;
+  border-bottom: 2px solid var(--color-primary);
+  padding: 8px 0;
+  margin: 0;
+}
+
+.neoglyn-about__cta-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  padding: 0 8px;
+  outline: none;
+}
+
+.neoglyn-about__cta-input::placeholder {
+  color: rgba(0,31,63,0.3);
+}
+
+.neoglyn-about__cta-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 16px;
+}
+
+.neoglyn-about__cta-legal {
+  font-size: 10px;
+  color: rgba(0,31,63,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}

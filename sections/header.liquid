@@ -1,0 +1,66 @@
+{{ 'component-neoglyn-layout.css' | asset_url | stylesheet_tag }}
+
+<header class="neoglyn-header" id="neoglyn-header">
+  <div class="neoglyn-header__container">
+    
+    <div class="neoglyn-header__left">
+      <a href="{{ routes.root_url }}" class="neoglyn-header__logo">
+        <span class="material-symbols-outlined neoglyn-header__logo-icon">auto_awesome</span>
+        <h1 class="neoglyn-header__logo-text">{{ shop.name }}</h1>
+      </a>
+    </div>
+
+    <nav class="neoglyn-header__nav">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}" class="neoglyn-header__nav-link">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="neoglyn-header__actions">
+      <div class="neoglyn-header__search">
+        <span class="material-symbols-outlined neoglyn-header__search-icon">search</span>
+        <form action="{{ routes.search_url }}" method="get" role="search">
+          <input type="text" name="q" placeholder="Search technology..." value="{{ search.terms | escape }}">
+        </form>
+      </div>
+
+      <a href="{{ routes.account_url }}" class="neoglyn-header__icon">
+        <span class="material-symbols-outlined">person</span>
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="neoglyn-header__icon" id="cart-icon-bubble">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        {%- if cart != empty -%}
+          <span class="neoglyn-header__cart-count">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('neoglyn-header');
+    if (window.scrollY > 50) {
+      header.classList.add('is-scrolled');
+    } else {
+      header.classList.remove('is-scrolled');
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Neoglyn Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Navigation Menu"
+    }
+  ]
+}
+{% endschema %}

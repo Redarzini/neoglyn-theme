@@ -1,0 +1,474 @@
+.neoglyn-account {
+  background-color: var(--color-background-light);
+  min-height: 100vh;
+  padding: 48px 0 96px;
+}
+
+/* Hero Section */
+.neoglyn-account__hero {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-account__hero {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
+
+.neoglyn-account__greeting-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.neoglyn-account__title {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-account__title {
+    font-size: 48px;
+  }
+}
+
+.neoglyn-account__title-sub {
+  color: var(--color-accent);
+  font-style: italic;
+  display: block;
+}
+
+.neoglyn-account__subtitle {
+  font-size: 16px;
+  color: rgba(0,31,63,0.6);
+  max-width: 450px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.neoglyn-account__actions {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-account__actions {
+    width: auto;
+  }
+}
+
+.neoglyn-account__btn-shop {
+  flex: 1;
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-account__btn-shop {
+    flex: none;
+  }
+}
+
+.neoglyn-account__btn-shop:hover {
+  box-shadow: 0 10px 15px -3px rgba(130, 217, 185, 0.2);
+}
+
+.neoglyn-account__btn-logout {
+  flex: 1;
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(0,31,63,0.1);
+}
+
+@media (min-width: 768px) {
+  .neoglyn-account__btn-logout {
+    flex: none;
+  }
+}
+
+.neoglyn-account__btn-logout:hover {
+  background-color: rgba(0,31,63,0.05);
+}
+
+/* Rewards Grid */
+.neoglyn-account__rewards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-account__rewards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.neoglyn-account__reward-card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid rgba(0,31,63,0.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.neoglyn-account__reward-icon {
+  color: var(--color-accent);
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.neoglyn-account__reward-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0,31,63,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 8px;
+}
+
+.neoglyn-account__reward-value {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.neoglyn-account__reward-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,31,63,0.05);
+}
+
+.neoglyn-account__reward-subtext {
+  font-size: 12px;
+  color: rgba(0,31,63,0.4);
+  margin: 0;
+}
+
+.neoglyn-account__reward-card--highlight {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  box-shadow: 0 20px 25px -5px rgba(130, 217, 185, 0.2);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.neoglyn-account__reward-card--highlight .neoglyn-account__reward-icon {
+  color: var(--color-primary);
+}
+
+.neoglyn-account__reward-card--highlight .neoglyn-account__reward-label {
+  color: rgba(0,31,63,0.7);
+}
+
+.neoglyn-account__reward-card--highlight .neoglyn-account__reward-value {
+  color: var(--color-primary);
+}
+
+.neoglyn-account__reward-card-glow {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  filter: blur(24px);
+}
+
+.neoglyn-account__reward-btn {
+  width: 100%;
+  padding: 8px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 24px;
+}
+
+.neoglyn-account__progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: rgba(0,31,63,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.neoglyn-account__progress-fill {
+  background-color: var(--color-accent);
+  height: 100%;
+}
+
+/* Orders Area */
+.neoglyn-account__main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-account__main-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.neoglyn-account__orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.neoglyn-account__section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.neoglyn-account__view-all {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.neoglyn-account__view-all:hover {
+  text-decoration: underline;
+}
+
+.neoglyn-account__orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.neoglyn-account__order-item {
+  background-color: #fff;
+  border: 1px solid rgba(0,31,63,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .neoglyn-account__order-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.neoglyn-account__order-details {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.neoglyn-account__order-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background-color: var(--color-background-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.neoglyn-account__order-info h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 4px;
+}
+
+.neoglyn-account__order-meta {
+  font-size: 12px;
+  color: rgba(0,31,63,0.5);
+  margin: 0 0 8px;
+}
+
+.neoglyn-account__order-status {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.neoglyn-account__order-status--fulfilled {
+  background-color: rgba(0,31,63,0.1);
+  color: rgba(0,31,63,0.5);
+}
+
+.neoglyn-account__order-status--unfulfilled {
+  background-color: rgba(130, 217, 185, 0.2);
+  color: var(--color-primary);
+}
+
+.neoglyn-account__order-actions {
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .neoglyn-account__order-actions {
+    text-align: right;
+  }
+}
+
+.neoglyn-account__order-price {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--color-primary);
+  margin: 0 0 8px;
+}
+
+.neoglyn-account__order-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: gap 0.3s ease;
+}
+
+.neoglyn-account__order-link:hover {
+  gap: 8px;
+}
+
+.neoglyn-account__empty {
+  background-color: #fff;
+  border: 1px solid rgba(0,31,63,0.05);
+  border-radius: 12px;
+  padding: 48px;
+  text-align: center;
+}
+
+.neoglyn-account__empty p {
+  color: rgba(0,31,63,0.5);
+  margin: 0;
+}
+
+/* Exclusives Sidebar */
+.neoglyn-account__exclusives {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.neoglyn-account__offer-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-primary);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.neoglyn-account__offer-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.neoglyn-account__offer-card:hover .neoglyn-account__offer-img {
+  transform: scale(1.1);
+}
+
+.neoglyn-account__offer-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--color-primary), transparent);
+}
+
+.neoglyn-account__offer-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: -0.05em;
+}
+
+.neoglyn-account__offer-content {
+  position: relative;
+  padding: 24px;
+  z-index: 10;
+}
+
+.neoglyn-account__offer-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+.neoglyn-account__offer-desc {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+.neoglyn-account__offer-btn {
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  border: 1px solid rgba(130, 217, 185, 0.5);
+  color: var(--color-accent);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.neoglyn-account__offer-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}

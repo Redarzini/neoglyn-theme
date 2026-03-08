@@ -1,0 +1,166 @@
+{{ 'neoglyn-faq.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-faq page-width" style="padding-top: 40px; padding-bottom: 80px; max-width: 1000px;">
+  <!-- Hero Section -->
+  <section class="neoglyn-faq__hero">
+    {%- if section.settings.hero_image != blank -%}
+      {{ section.settings.hero_image | image_url: width: 1200 | image_tag: class: 'neoglyn-faq__hero-bg' }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'neoglyn-faq__hero-bg' }}
+    {%- endif -%}
+    <div class="neoglyn-faq__hero-overlay"></div>
+    <div class="neoglyn-faq__hero-content">
+      <h1 class="neoglyn-faq__title">{{ section.settings.title | default: 'Help Center' }}</h1>
+      <p class="neoglyn-faq__desc">{{ section.settings.description | default: 'How can we assist your Neoglyn experience today?' }}</p>
+    </div>
+  </section>
+
+  <!-- Categories Nav -->
+  <nav class="neoglyn-faq__nav">
+    <div class="neoglyn-faq__nav-list">
+      <a href="#" class="neoglyn-faq__nav-item neoglyn-faq__nav-item--active">All Questions</a>
+      {%- assign current_category = '' -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq_item' and block.settings.category != current_category -%}
+          <a href="#{{ block.settings.category | handleize }}" class="neoglyn-faq__nav-item">{{ block.settings.category }}</a>
+          {%- assign current_category = block.settings.category -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </nav>
+
+  <!-- FAQ Sections -->
+  <div class="neoglyn-faq__sections">
+    {%- assign current_category = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'faq_item' -%}
+        {%- if block.settings.category != current_category -%}
+          {%- if forloop.index > 1 -%}
+              </div>
+            </section>
+          {%- endif -%}
+          <section id="{{ block.settings.category | handleize }}" class="neoglyn-faq__category">
+            <div class="neoglyn-faq__category-header">
+              {%- if block.settings.category_icon != blank -%}
+                <span class="material-symbols-outlined neoglyn-faq__category-icon">{{ block.settings.category_icon }}</span>
+              {%- endif -%}
+              <h2 class="neoglyn-faq__category-title">{{ block.settings.category }}</h2>
+            </div>
+            <div class="neoglyn-faq__list">
+          {%- assign current_category = block.settings.category -%}
+        {%- endif -%}
+        
+        <details class="neoglyn-faq__item" {{ block.shopify_attributes }}>
+          <summary class="neoglyn-faq__question">
+            <p class="neoglyn-faq__question-text">{{ block.settings.question }}</p>
+            <span class="material-symbols-outlined neoglyn-faq__icon">expand_more</span>
+          </summary>
+          <div class="neoglyn-faq__answer">
+            <div class="neoglyn-faq__answer-text">{{ block.settings.answer }}</div>
+          </div>
+        </details>
+        
+        {%- if forloop.last -%}
+            </div>
+          </section>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <!-- Contact CTA -->
+  <div class="neoglyn-faq__cta">
+    <div>
+      <h3 class="neoglyn-faq__cta-title">{{ section.settings.cta_title | default: 'Still have questions?' }}</h3>
+      <p class="neoglyn-faq__cta-desc">{{ section.settings.cta_desc | default: 'Our beauty experts are available 24/7 to help you.' }}</p>
+    </div>
+    <div class="neoglyn-faq__cta-actions">
+      <a href="mailto:{{ shop.email }}" class="neoglyn-faq__btn-primary">Email Us</a>
+      <a href="{{ routes.all_products_collection_url }}" class="neoglyn-faq__btn-outline">Shop Neoglyn</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Help Center"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "How can we assist your Neoglyn experience today?"
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "CTA Title",
+      "default": "Still have questions?"
+    },
+    {
+      "type": "text",
+      "id": "cta_desc",
+      "label": "CTA Description",
+      "default": "Our beauty experts are available 24/7 to help you."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category Name",
+          "info": "Groups FAQs with the same category name together.",
+          "default": "Shipping & Logistics"
+        },
+        {
+          "type": "text",
+          "id": "category_icon",
+          "label": "Category Material Icon ID",
+          "info": "Only needed on the first FAQ item of a category.",
+          "default": "local_shipping"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How long does international shipping take?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Our high-end devices are shipped via priority courier. International shipping typically takes 5-10 business days depending on your location and customs processing.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn FAQ",
+      "blocks": [
+        { "type": "faq_item", "settings": { "category": "Shipping & Logistics", "category_icon": "local_shipping", "question": "How long does international shipping take?", "answer": "<p>Our high-end devices are shipped via priority courier. International shipping typically takes 5-10 business days depending on your location and customs processing. Each shipment is fully insured for its value.</p>" } },
+        { "type": "faq_item", "settings": { "category": "Shipping & Logistics", "question": "Can I track my order in real-time?", "answer": "<p>Yes, once your order is dispatched, you will receive a tracking number via email. You can use our real-time tracking portal or the carrier's website to monitor your shipment's journey.</p>" } },
+        { "type": "faq_item", "settings": { "category": "Product Usage", "category_icon": "dermatology", "question": "How often should I use my Neoglyn device?", "answer": "<p>For optimal results, we recommend using the device 3-4 times a week during the initial 4-week priming phase. After that, maintenance usage twice weekly is sufficient for most skin types.</p>" } },
+        { "type": "faq_item", "settings": { "category": "Returns & Warranty", "category_icon": "assignment_return", "question": "What is your return policy?", "answer": "<p>We offer a 30-day Luminous Skin guarantee. If you are not satisfied with your results, you can return the device in its original packaging. Please contact our support team to initiate a return authorization.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

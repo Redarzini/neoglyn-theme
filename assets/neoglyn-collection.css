@@ -1,0 +1,339 @@
+.neoglyn-collection {
+  padding: 48px 0;
+  background-color: var(--color-background-light);
+}
+
+.neoglyn-collection__header {
+  margin-bottom: 48px;
+}
+
+.neoglyn-collection__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0,31,63,0.6);
+  margin-bottom: 24px;
+}
+
+.neoglyn-collection__breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.neoglyn-collection__breadcrumb a:hover {
+  color: var(--color-accent);
+}
+
+.neoglyn-collection__breadcrumb span {
+  font-size: 10px;
+}
+
+.neoglyn-collection__breadcrumb-current {
+  color: var(--color-primary);
+}
+
+.neoglyn-collection__title-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .neoglyn-collection__title-bar {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.neoglyn-collection__title {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.neoglyn-collection__description {
+  font-size: 18px;
+  color: rgba(0,31,63,0.7);
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.neoglyn-collection__controls {
+  display: flex;
+  gap: 12px;
+}
+
+.neoglyn-collection__control-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,31,63,0.1);
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.neoglyn-collection__control-btn:hover {
+  border-color: var(--color-accent);
+}
+
+.neoglyn-collection__badges {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 48px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.neoglyn-collection__badges::-webkit-scrollbar {
+  display: none;
+}
+
+.neoglyn-collection__badge-btn {
+  flex-shrink: 0;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.neoglyn-collection__badge-btn--active {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.neoglyn-collection__badge-btn--inactive {
+  background-color: rgba(0,31,63,0.05);
+  color: rgba(0,31,63,0.7);
+}
+
+.neoglyn-collection__badge-btn--inactive:hover {
+  background-color: rgba(0,31,63,0.1);
+}
+
+.neoglyn-collection__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 640px) {
+  .neoglyn-collection__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .neoglyn-collection__grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 1280px) {
+  .neoglyn-collection__grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.neoglyn-product-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.neoglyn-product-card:hover {
+  border-color: var(--color-metallic);
+  box-shadow: 0 0 15px rgba(192, 192, 192, 0.2);
+}
+
+.neoglyn-product-card__image-wrapper {
+  position: relative;
+  aspect-ratio: 1;
+  background-color: rgba(0,31,63,0.02);
+  overflow: hidden;
+}
+
+.neoglyn-product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.neoglyn-product-card:hover .neoglyn-product-card__image {
+  transform: scale(1.1);
+}
+
+.neoglyn-product-card__tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.neoglyn-product-card__tag--mint {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.neoglyn-product-card__quick-add {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.neoglyn-product-card:hover .neoglyn-product-card__quick-add {
+  transform: translateY(0);
+}
+
+.neoglyn-product-card__quick-add form {
+  margin: 0;
+}
+
+.neoglyn-product-card__quick-add-btn {
+  width: 100%;
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.neoglyn-product-card__quick-add-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.neoglyn-product-card__info {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.neoglyn-product-card__vendor {
+  font-size: 12px;
+  color: rgba(0,31,63,0.5);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 8px;
+}
+
+.neoglyn-product-card__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.neoglyn-product-card__bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.neoglyn-product-card__price {
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.neoglyn-product-card__reviews {
+  display: flex;
+  color: var(--color-accent);
+}
+
+.neoglyn-product-card__reviews span {
+  font-size: 14px;
+}
+
+.neoglyn-collection__pagination {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.neoglyn-collection__pagination-text {
+  font-size: 14px;
+  color: rgba(0,31,63,0.5);
+}
+
+.neoglyn-collection__progress-bar {
+  width: 100%;
+  max-width: 320px;
+  height: 4px;
+  background-color: rgba(0,31,63,0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.neoglyn-collection__progress {
+  height: 100%;
+  background-color: var(--color-accent);
+}
+
+.neoglyn-collection__load-more {
+  padding: 12px 40px;
+  border-radius: 8px;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.neoglyn-collection__load-more:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}

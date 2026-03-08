@@ -1,0 +1,196 @@
+{{ 'neoglyn-contact.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-contact">
+  <div class="page-width" style="max-width: 1200px;">
+    
+    <!-- Hero Section -->
+    <div class="neoglyn-contact__hero">
+      {%- if section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 1200 | image_tag: class: 'neoglyn-contact__hero-bg' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'neoglyn-contact__hero-bg' }}
+      {%- endif -%}
+      <div class="neoglyn-contact__hero-overlay"></div>
+      <div class="neoglyn-contact__hero-content">
+        <h1 class="neoglyn-contact__hero-title">{{ section.settings.title | default: 'Elevate Your Beauty Experience' }}</h1>
+        <p class="neoglyn-contact__hero-desc">{{ section.settings.subtitle | default: 'Our specialists are ready to assist with your high-end routine.' }}</p>
+      </div>
+    </div>
+
+    <div class="neoglyn-contact__grid">
+      <!-- Left Column: Info Sidebar -->
+      <div class="neoglyn-contact__info">
+        <div>
+          <h2 class="neoglyn-contact__info-title">{{ section.settings.info_title | default: 'Get in Touch' }}</h2>
+          <p class="neoglyn-contact__info-desc">{{ section.settings.info_desc | default: 'Have questions about our technology or need assistance with your order? Our concierge team is here for you.' }}</p>
+        </div>
+
+        <div class="neoglyn-contact__cards">
+          <div class="neoglyn-contact__card">
+            <div class="neoglyn-contact__card-icon">
+              <span class="material-symbols-outlined">headset_mic</span>
+            </div>
+            <div class="neoglyn-contact__card-content">
+              <h3 class="neoglyn-contact__card-title">24/7 Support</h3>
+              <p class="neoglyn-contact__card-text">Concierge available around the clock</p>
+            </div>
+          </div>
+          
+          <div class="neoglyn-contact__card">
+            <div class="neoglyn-contact__card-icon">
+              <span class="material-symbols-outlined">mail</span>
+            </div>
+            <div class="neoglyn-contact__card-content">
+              <h3 class="neoglyn-contact__card-title">Email Us</h3>
+              <p class="neoglyn-contact__card-text">{{ shop.email }}</p>
+            </div>
+          </div>
+
+          <div class="neoglyn-contact__card">
+            <div class="neoglyn-contact__card-icon">
+              <span class="material-symbols-outlined">share</span>
+            </div>
+            <div class="neoglyn-contact__card-content">
+              <h3 class="neoglyn-contact__card-title">Follow Us</h3>
+              <div class="neoglyn-contact__socials">
+                {%- if settings.social_instagram_link != blank -%}
+                  <a href="{{ settings.social_instagram_link }}" class="neoglyn-contact__social-link"><span class="material-symbols-outlined">photo_camera</span></a>
+                {%- endif -%}
+                {%- if settings.social_facebook_link != blank -%}
+                  <a href="{{ settings.social_facebook_link }}" class="neoglyn-contact__social-link"><span class="material-symbols-outlined">public</span></a>
+                {%- endif -%}
+                {%- if settings.social_tiktok_link != blank -%}
+                 <a href="{{ settings.social_tiktok_link }}" class="neoglyn-contact__social-link"><span class="material-symbols-outlined">brand_awareness</span></a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Contact Form -->
+      <div class="neoglyn-contact__form-wrapper">
+        <h3 class="neoglyn-contact__form-title">Send us a message</h3>
+        
+        {%- form 'contact', id: 'ContactForm', class: 'neoglyn-contact__form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="neoglyn-contact__successMessage">
+              Thank you for contacting Neoglyn. Our concierge will be in touch shortly.
+            </div>
+          {%- endif -%}
+
+          <div class="neoglyn-contact__form-grid">
+            <div class="neoglyn-contact__field">
+              <label class="neoglyn-contact__label" for="ContactForm-name">Full Name</label>
+              <input class="neoglyn-contact__input" autocomplete="name" type="text" id="ContactForm-name" name="contact[Name]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="Jane Doe">
+            </div>
+            <div class="neoglyn-contact__field">
+              <label class="neoglyn-contact__label" for="ContactForm-email">Email Address <span aria-hidden="true">*</span></label>
+              <input
+                autocomplete="email"
+                type="email"
+                id="ContactForm-email"
+                class="neoglyn-contact__input"
+                name="contact[email]"
+                spellcheck="false"
+                autocapitalize="off"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                aria-required="true"
+                placeholder="jane@example.com"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="neoglyn-contact__field">
+            <label class="neoglyn-contact__label" for="ContactForm-phone">Phone Number</label>
+            <input type="tel" id="ContactForm-phone" class="neoglyn-contact__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="(555) 555-5555">
+          </div>
+
+          <div class="neoglyn-contact__field">
+            <label class="neoglyn-contact__label" for="ContactForm-body">Message</label>
+            <textarea
+              rows="5"
+              id="ContactForm-body"
+              class="neoglyn-contact__textarea"
+              name="contact[body]"
+              placeholder="How can we help you today?"
+            >
+              {{- form.body -}}
+            </textarea>
+          </div>
+
+          <button type="submit" class="neoglyn-contact__submit">
+            <span>Send Message</span>
+            <span class="material-symbols-outlined">send</span>
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+
+    <!-- Trust Badges -->
+    <div class="neoglyn-contact__badges">
+      <div class="neoglyn-contact__badge">
+        <span class="material-symbols-outlined">verified_user</span>
+        <span>Secure Payments</span>
+      </div>
+      <div class="neoglyn-contact__badge">
+        <span class="material-symbols-outlined">local_shipping</span>
+        <span>Global Shipping</span>
+      </div>
+      <div class="neoglyn-contact__badge">
+        <span class="material-symbols-outlined">workspace_premium</span>
+        <span>2-Year Warranty</span>
+      </div>
+      <div class="neoglyn-contact__badge">
+        <span class="material-symbols-outlined">eco</span>
+        <span>Sustainable Design</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Contact Us",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Hero Title",
+      "default": "Elevate Your Beauty Experience"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Hero Subtitle",
+      "default": "Our specialists are ready to assist with your high-end routine."
+    },
+    {
+      "type": "text",
+      "id": "info_title",
+      "label": "Info Title",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "textarea",
+      "id": "info_desc",
+      "label": "Info Description",
+      "default": "Have questions about our technology or need assistance with your order? Our concierge team is here for you."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Contact Us"
+    }
+  ]
+}
+{% endschema %}

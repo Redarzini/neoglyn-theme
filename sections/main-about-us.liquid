@@ -1,0 +1,222 @@
+{{ 'neoglyn-about.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-about">
+  <!-- Hero Section -->
+  <section class="neoglyn-about__hero">
+    <div class="neoglyn-about__img-overlay-left"></div>
+    {%- if section.settings.hero_image != blank -%}
+      {{ section.settings.hero_image | image_url: width: 2000 | image_tag: class: 'neoglyn-about__hero-img' }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'neoglyn-about__hero-img' }}
+    {%- endif -%}
+    
+    <div class="page-width relative z-20 w-full">
+      <div class="neoglyn-about__hero-content">
+        <span class="neoglyn-about__hero-badge">Est. {{ 'now' | date: '%Y' }}</span>
+        <h1 class="neoglyn-about__hero-title">{{ section.settings.hero_title | default: 'Elevating Beauty <br/>to a Science' }}</h1>
+        <p class="neoglyn-about__hero-desc">
+          {{ section.settings.hero_description | default: 'Discover the Neoglyn journey of bringing clinical-grade innovation to your daily ritual. Where performance meets aesthetic perfection.' }}
+        </p>
+        <div class="neoglyn-about__hero-actions">
+          <a href="{{ section.settings.primary_button_link | default: routes.collections_url }}" class="neoglyn-about__btn-primary">{{ section.settings.primary_button_label | default: 'Explore Science' }}</a>
+          <a href="#mission" class="neoglyn-about__btn-outline">Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="neoglyn-about__mission" id="mission">
+    <div class="page-width">
+      <h2 class="neoglyn-about__mission-subtitle">Our Mission</h2>
+      <p class="neoglyn-about__mission-quote">
+        "To empower individuals by bringing the precision and efficacy of <span>clinical-grade beauty technology</span> into the comfort of the home."
+      </p>
+      <div class="neoglyn-about__mission-divider"></div>
+    </div>
+  </section>
+
+  <!-- Technology Section -->
+  <section class="neoglyn-about__tech">
+    <div class="page-width">
+      <div class="neoglyn-about__tech-grid">
+        <div class="neoglyn-about__tech-content">
+          <h3 class="neoglyn-about__tech-title">{{ section.settings.tech_title | default: 'The Science of Sophistication' }}</h3>
+          <p class="neoglyn-about__tech-desc">
+            {{ section.settings.tech_description | default: "Rooted in science, engineered for elegance. Our devices utilize advanced micro-current and LED therapy to rejuvenate your skin at a cellular level. We don't just follow trends; we pioneer the technology that defines the next decade of skincare." }}
+          </p>
+          
+          <div class="neoglyn-about__tech-features">
+            <div class="neoglyn-about__feature">
+              <div class="neoglyn-about__feature-icon">
+                <span class="material-symbols-outlined fill-1">biotech</span>
+              </div>
+              <h4 class="neoglyn-about__feature-title">Clinical Precision</h4>
+              <p class="neoglyn-about__feature-desc">Tested by world-leading dermatologists to ensure medical-grade safety.</p>
+            </div>
+            
+            <div class="neoglyn-about__feature">
+              <div class="neoglyn-about__feature-icon neoglyn-about__feature-icon--light">
+                <span class="material-symbols-outlined">draw</span>
+              </div>
+              <h4 class="neoglyn-about__feature-title">Ergonomic Luxury</h4>
+              <p class="neoglyn-about__feature-desc">Designed to fit perfectly in your hand and elevate your vanity.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="neoglyn-about__tech-visual">
+          <div class="neoglyn-about__tech-img-wrapper">
+             {%- if section.settings.tech_image != blank -%}
+              {{ section.settings.tech_image | image_url: width: 800 | image_tag: class: 'neoglyn-about__tech-img' }}
+            {%- else -%}
+              {{ 'product-4' | placeholder_svg_tag: 'neoglyn-about__tech-img' }}
+            {%- endif -%}
+          </div>
+          <div class="neoglyn-about__tech-stat">
+            <div class="neoglyn-about__tech-stat-num">98%</div>
+            <div class="neoglyn-about__tech-stat-label">Visible Results</div>
+            <div class="neoglyn-about__tech-stat-sub">Based on clinical trials <br/>over 12 weeks.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promise Section -->
+  <section class="neoglyn-about__promise">
+    <svg class="neoglyn-about__promise-bg" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="50" r="50" stroke="currentColor" stroke-width="0.5"></circle>
+      <circle cx="100" cy="50" r="40" stroke="currentColor" stroke-width="0.5"></circle>
+      <circle cx="100" cy="50" r="30" stroke="currentColor" stroke-width="0.5"></circle>
+    </svg>
+    <div class="page-width">
+      <div class="neoglyn-about__promise-header">
+        <h2 class="neoglyn-about__promise-subtitle">Our Promise</h2>
+        <h3 class="neoglyn-about__promise-title">Uncompromising Quality. <br/>Unparalleled Experience.</h3>
+      </div>
+      
+      <div class="neoglyn-about__promise-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'promise_card' -%}
+            <div class="neoglyn-about__promise-card">
+              <span class="material-symbols-outlined neoglyn-about__promise-icon">{{ block.settings.icon }}</span>
+              <h4 class="neoglyn-about__promise-card-title">{{ block.settings.title }}</h4>
+              <p class="neoglyn-about__promise-card-text">"{{ block.settings.text }}"</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA Section -->
+  <section class="neoglyn-about__cta">
+    <div class="page-width">
+      <div class="neoglyn-about__cta-card">
+        <div class="neoglyn-about__cta-content">
+          <h3 class="neoglyn-about__cta-title">Join the Inner Circle</h3>
+          <p class="neoglyn-about__cta-desc">Receive early access to product launches, clinical study results, and expert beauty advice.</p>
+        </div>
+        
+        <div class="neoglyn-about__cta-form-wrapper">
+          {%- form 'customer', class: 'neoglyn-about__cta-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email"
+              name="contact[email]"
+              class="neoglyn-about__cta-input"
+              value="{{ form.email }}"
+              placeholder="Enter your email"
+              required
+            >
+            <button type="submit" class="neoglyn-about__cta-btn">
+              Subscribe
+            </button>
+          {%- endform -%}
+          <p class="neoglyn-about__cta-legal">By subscribing you agree to our Privacy Policy</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn About Us",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Elevating Beauty <br/>to a Science"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_description",
+      "label": "Hero Description",
+      "default": "Discover the Neoglyn journey of bringing clinical-grade innovation to your daily ritual. Where performance meets aesthetic perfection."
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Primary Button Label",
+      "default": "Explore Science"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Technology Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "tech_image",
+      "label": "Technology Image"
+    },
+    {
+      "type": "text",
+      "id": "tech_title",
+      "label": "Technology Title",
+      "default": "The Science of Sophistication"
+    },
+    {
+      "type": "textarea",
+      "id": "tech_description",
+      "label": "Technology Description",
+      "default": "Rooted in science, engineered for elegance. Our devices utilize advanced micro-current and LED therapy to rejuvenate your skin at a cellular level."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promise_card",
+      "name": "Promise Card",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Material Icon Name", "default": "verified_user" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Lifetime Support" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Our commitment doesn't end at the purchase." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn About Us",
+      "blocks": [
+        { "type": "promise_card", "settings": {"icon": "verified_user", "title": "Lifetime Support", "text": "Our commitment doesn't end at the purchase. We are your partners in beauty for a lifetime."} },
+        { "type": "promise_card", "settings": {"icon": "eco", "title": "Sustainably Sourced", "text": "Premium doesn't have to mean wasteful. Every material is chosen with the future in mind."} },
+        { "type": "promise_card", "settings": {"icon": "model_training", "title": "Expert Guidance", "text": "Personalized routines and expert masterclasses to ensure you get the absolute best results."} }
+      ]
+    }
+  ]
+}
+{% endschema %}

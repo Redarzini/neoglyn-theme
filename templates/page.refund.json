@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "refund_info": {
+      "type": "rich-text",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      },
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our 60-Day Results Guarantee",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We are supremely confident in the transformative power of the Neoglyn Anti-Gravity device. That’s why we offer an industry-leading <strong>60-Day Results Guarantee</strong>.</p><h3>How it Works</h3><p>If you have used your device as directed (5 minutes a day, 5 days a week) for a full 60 days and do not see a visible lifted, toned, and contoured difference in your facial appearance, you are eligible for a full refund.</p><h3>Returns Process</h3><ol><li>Contact our support team within 60 days of receiving your device to initiate a return.</li><li>We will provide a prepaid return shipping label.</li><li>Once we receive the device, your refund will be processed to the original method of payment within 5-7 business days.</li></ol><h3>Damaged or Defective Devices</h3><p>Every Neoglyn device comes with a 1-year limited warranty. If your device arrives defective or develops a fault, please contact us immediately for a replacement.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "refund_info"
+  ]
+}
