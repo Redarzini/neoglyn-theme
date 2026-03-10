@@ -1,0 +1,18 @@
+/* neoglyn-popup.css */
+neoglyn-popup {
+  display: flex !important;
+  visibility: hidden;
+}
+
+neoglyn-popup.is-active {
+  visibility: visible;
+  opacity: 1;
+}
+
+neoglyn-popup.is-active .popup-content {
+  transform: scale(1);
+}
+
+.popup-open {
+  overflow: hidden;
+}

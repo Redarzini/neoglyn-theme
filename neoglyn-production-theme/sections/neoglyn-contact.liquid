@@ -1,0 +1,167 @@
+{{ 'neoglyn-contact.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-contact bg-white dark:bg-slate-950 text-midnight dark:text-slate-100 font-display min-h-screen">
+  <div class="max-w-[1200px] mx-auto py-20 lg:py-32 px-6 lg:px-10">
+    
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
+      
+      <!-- Contact Info -->
+      <div class="flex flex-col gap-10">
+        <div>
+          <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">{{ section.settings.tagline }}</span>
+          <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-midnight dark:text-white mb-6 leading-[1.1]">{{ section.settings.heading }}</h1>
+          <p class="text-lg text-midnight/70 dark:text-slate-400 leading-relaxed max-w-md">{{ section.settings.text }}</p>
+        </div>
+
+        <div class="flex flex-col gap-8 mt-4">
+          {% for block in section.blocks %}
+            {% if block.type == 'contact_method' %}
+              <div class="flex gap-6 group cursor-pointer p-6 rounded-2xl hover:bg-background-light dark:hover:bg-slate-900 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+                <div class="size-14 bg-primary/10 rounded-full flex justify-center items-center text-primary group-hover:scale-110 transition-transform">
+                  <span class="material-symbols-outlined text-[28px]">{{ block.settings.icon }}</span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-lg text-midnight dark:text-white mb-1">{{ block.settings.title }}</h3>
+                  <a href="{{ block.settings.link }}" class="text-midnight/60 dark:text-slate-400 hover:text-primary transition-colors">{{ block.settings.value }}</a>
+                  {% if block.settings.hours != blank %}
+                    <p class="text-xs text-midnight/40 dark:text-slate-500 mt-2 font-medium uppercase tracking-widest">{{ block.settings.hours }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="bg-background-light dark:bg-slate-900 rounded-[32px] p-8 lg:p-12 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden">
+        <div class="absolute -top-32 -left-32 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <h2 class="text-2xl font-bold mb-8 relative z-10">{{ section.settings.form_heading }}</h2>
+        
+        {% form 'contact', class: 'relative z-10 flex flex-col gap-6' %}
+          {% if form.posted_successfully? %}
+            <div class="p-6 bg-primary/10 border border-primary/20 rounded-2xl text-midnight font-bold flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">check_circle</span>
+              Thank you for reaching out. Our concierge team will reply shortly.
+            </div>
+          {% endif %}
+          {{ form.errors | default_errors }}
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <label for="ContactFormName" class="text-xs font-bold uppercase tracking-widest text-midnight/60 dark:text-slate-500">Name</label>
+              <input type="text" id="ContactFormName" name="contact[name]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" class="bg-white dark:bg-slate-800 border-none rounded-xl py-4 px-5 text-midnight dark:text-white shadow-sm focus:ring-2 focus:ring-primary">
+            </div>
+            <div class="flex flex-col gap-2">
+              <label for="ContactFormEmail" class="text-xs font-bold uppercase tracking-widest text-midnight/60 dark:text-slate-500">Email *</label>
+              <input type="email" id="ContactFormEmail" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="bg-white dark:bg-slate-800 border-none rounded-xl py-4 px-5 text-midnight dark:text-white shadow-sm focus:ring-2 focus:ring-primary" required>
+            </div>
+          </div>
+          
+          <div class="flex flex-col gap-2">
+             <label for="ContactFormPhone" class="text-xs font-bold uppercase tracking-widest text-midnight/60 dark:text-slate-500">Subject</label>
+             <select id="ContactFormTopic" name="contact[topic]" class="bg-white dark:bg-slate-800 border-none rounded-xl py-4 px-5 text-midnight dark:text-white shadow-sm focus:ring-2 focus:ring-primary appearance-none max-w-full">
+                <option>Order Status / Tracking</option>
+                <option>Device Troubleshooting</option>
+                <option>Subscription Inquiries</option>
+                <option>General Questions</option>
+             </select>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="ContactFormMessage" class="text-xs font-bold uppercase tracking-widest text-midnight/60 dark:text-slate-500">Message *</label>
+            <textarea id="ContactFormMessage" name="contact[body]" rows="5" class="bg-white dark:bg-slate-800 border-none rounded-xl py-4 px-5 text-midnight dark:text-white shadow-sm focus:ring-2 focus:ring-primary resize-none" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </div>
+          
+          <button type="submit" class="w-full bg-midnight dark:bg-primary text-white dark:text-midnight font-bold uppercase tracking-widest text-sm py-5 rounded-full hover:bg-midnight/90 dark:hover:brightness-95 transition-all mt-4 shadow-lg">
+            Send Message
+          </button>
+        {% endform %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Concierge Support",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "White Glove Support"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Personal Concierge."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Whether you need assistance building your clinical routine, troubleshooting a device, or managing your Glow Autopilot orders—we are here."
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form Heading",
+      "default": "Send an Inquiry"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact_method",
+      "name": "Contact Method",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon ID",
+          "default": "mail"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Email Us"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Contact Value",
+          "default": "concierge@neoglyn.com"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (mailto: or tel:)"
+        },
+        {
+          "type": "text",
+          "id": "hours",
+          "label": "Hours (Optional)",
+          "default": "Responds within 2 hours"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Concierge Support",
+      "blocks": [
+        { "type": "contact_method", "settings": { "icon": "mail", "title": "Email Us", "value": "concierge@neoglyn.com", "link": "mailto:concierge@neoglyn.com", "hours": "Responds within 2 hours" } },
+        { "type": "contact_method", "settings": { "icon": "call", "title": "Call Direct", "value": "+1 (800) 555-GLOW", "link": "tel:+18005554569", "hours": "Mon-Fri, 9am - 6pm EST" } },
+        { "type": "contact_method", "settings": { "icon": "chat", "title": "Live Consultation", "value": "Start a Session", "link": "#", "hours": "Available Mon-Fri" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

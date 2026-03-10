@@ -1,0 +1,12 @@
+/* neoglyn-testimonials.css */
+.neoglyn-testimonials {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media screen and (min-width: 990px) {
+  .neoglyn-testimonials {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}

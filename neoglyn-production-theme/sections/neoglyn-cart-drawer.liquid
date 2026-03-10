@@ -1,0 +1,154 @@
+{{ 'neoglyn-cart-drawer.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'neoglyn-cart-drawer.js' | asset_url }}" defer="defer"></script>
+
+<neoglyn-cart-drawer class="hidden fixed inset-0 z-50 bg-midnight/30 backdrop-blur-sm transition-opacity opacity-0" id="CartDrawer" aria-modal="true" role="dialog" tabindex="-1">
+  <div class="absolute inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl transition-transform translate-x-full duration-300 transform flex flex-col h-full font-display">
+    
+    <!-- Drawer Header -->
+    <div class="px-6 py-6 border-b border-background-light flex items-center justify-between bg-white sticky top-0 z-10">
+      <h2 class="text-xl font-bold text-midnight flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">shopping_bag</span>
+        {{ section.settings.cart_title | default: 'Your Cart' }}
+        <span class="bg-background-light text-midnight text-xs rounded-full px-2 py-0.5 ml-1">{{ cart.item_count }}</span>
+      </h2>
+      <button type="button" class="cart-drawer__close size-10 rounded-full hover:bg-background-light flex items-center justify-center text-midnight transition-colors" aria-label="Close cart">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Free Shipping Bar -->
+    <div class="px-6 py-3 bg-primary/10 border-b border-primary/20 flex flex-col gap-2">
+      {% assign threshold = section.settings.free_shipping_threshold | times: 100 %}
+      {% if cart.total_price >= threshold %}
+        <p class="text-xs font-bold text-midnight text-center uppercase tracking-widest flex items-center justify-center gap-1">
+          <span class="material-symbols-outlined text-sm text-primary">local_shipping</span> You have unlocked free shipping!
+        </p>
+        <div class="w-full bg-white rounded-full h-1.5 overflow-hidden">
+          <div class="bg-primary h-full w-full"></div>
+        </div>
+      {% else %}
+        {% assign amount_left = threshold | minus: cart.total_price %}
+        <p class="text-xs font-bold text-midnight text-center">
+          You are <span class="text-primary">{{ amount_left | money }}</span> away from free shipping.
+        </p>
+        {% assign pct = cart.total_price | times: 1.0 | divided_by: threshold | times: 100 %}
+        <div class="w-full bg-white rounded-full h-1.5 overflow-hidden">
+          <div class="bg-primary h-full transition-all duration-300" style="width: {{ pct }}%"></div>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Cart Items -->
+    <div class="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-6" id="CartDrawer-Form">
+      {% if cart.item_count == 0 %}
+        <div class="flex-1 flex flex-col items-center justify-center text-center gap-4 py-12">
+          <div class="size-20 rounded-full bg-background-light flex items-center justify-center text-primary/50">
+            <span class="material-symbols-outlined text-4xl">shopping_cart</span>
+          </div>
+          <h3 class="text-lg font-bold text-midnight">Your cart is empty</h3>
+          <p class="text-sm text-midnight/60 max-w-[200px]">Looks like you haven't added any luxury tools yet.</p>
+          <button type="button" class="cart-drawer__close mt-4 bg-primary text-midnight px-8 py-3 rounded-full font-bold text-sm shadow-md hover:brightness-95 transition-all">Start Shopping</button>
+        </div>
+      {% else %}
+        {% for item in cart.items %}
+          <div class="flex gap-4 group">
+            <a href="{{ item.url }}" class="size-24 rounded-xl bg-background-light overflow-hidden border border-slate-100 flex-shrink-0">
+              <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover">
+            </a>
+            <div class="flex flex-col flex-1 justify-between py-1">
+              <div class="flex justify-between items-start gap-2">
+                <div>
+                  <a href="{{ item.url }}" class="text-sm font-bold text-midnight hover:text-primary transition-colors line-clamp-2">{{ item.product.title }}</a>
+                  {% unless item.variant.title contains 'Default' %}
+                    <p class="text-xs text-midnight/60 mt-0.5">{{ item.variant.title }}</p>
+                  {% endunless %}
+                </div>
+                <!-- Remove item -->
+                <a href="{{ item.url_to_remove }}" class="text-slate-400 hover:text-red-500 transition-colors">
+                  <span class="material-symbols-outlined text-sm">delete</span>
+                </a>
+              </div>
+              <div class="flex justify-between items-end mt-2">
+                <!-- Quantity toggle -->
+                <div class="flex items-center border border-slate-200 rounded-lg bg-white h-8 overflow-hidden">
+                  <button type="button" class="cart-qty-btn px-2 text-midnight/60 hover:text-midnight transition-colors" data-action="minus" data-key="{{ item.key }}">-</button>
+                  <input type="number" class="w-8 text-center text-xs font-bold border-none focus:ring-0 p-0 text-midnight" value="{{ item.quantity }}" min="1">
+                  <button type="button" class="cart-qty-btn px-2 text-midnight/60 hover:text-midnight transition-colors" data-action="plus" data-key="{{ item.key }}">+</button>
+                </div>
+                <div class="text-sm font-bold text-midnight">
+                  {{ item.final_line_price | money }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+      
+      {% if section.settings.show_upsell and cart.item_count > 0 %}
+        <div class="mt-8 pt-6 border-t border-background-light">
+          <h4 class="text-xs font-bold uppercase tracking-widest text-midnight/60 mb-4">{{ section.settings.upsell_heading }}</h4>
+          <div class="p-4 rounded-xl bg-background-light border border-slate-100 flex gap-4">
+             <div class="size-16 rounded-lg bg-white overflow-hidden shadow-sm">
+                <!-- Placeholder for recommended product -->
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt1xsn3aFRXJigcRGhoCw1deB21Nuo3WxX3Il6VwDAKTs2tYMWGJ0Sc-Tw-QDOiGFFfdfU7d7mnAd93XrB3KDIJrIYz3-4fk_SNIIIepugn_CFTpxml9-V01G42KVoxUqJ7PEa4bhpBwWj9GI56kclBy8rbHcEJnJDXBAxZpzgjBfX9E3cK7l5NvFZ4QoUaUKQGOKvPCWcVxlJbqxLV7d-ZvvurqiKhY2PjiKTjamQQhskaqtZjA-_B_8oJBhmgRImopG2IQDMZww" class="w-full h-full object-cover">
+             </div>
+             <div class="flex-1 flex flex-col justify-center">
+               <p class="text-xs font-bold text-midnight">Hydration Serum Mini</p>
+               <p class="text-xs text-midnight/60 mb-1">$25.00</p>
+               <button class="text-[10px] font-bold uppercase tracking-widest bg-white border border-slate-200 text-midnight py-1 px-3 rounded text-center hover:border-midnight transition-colors w-fit">Add</button>
+             </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Drawer Footer -->
+    {% if cart.item_count > 0 %}
+      <div class="p-6 bg-white border-t border-background-light shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10 sticky bottom-0">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-bold text-midnight/60 uppercase tracking-widest">Subtotal</span>
+          <span class="text-xl font-bold text-midnight">{{ cart.total_price | money }}</span>
+        </div>
+        <p class="text-xs text-midnight/60 text-center mb-4">Taxes and shipping calculated at checkout</p>
+        <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-checkout">
+          <button type="submit" name="checkout" class="w-full bg-midnight hover:bg-midnight/90 text-white py-4 rounded-full font-bold tracking-widest uppercase transition-all flex items-center justify-center gap-2 shadow-lg">
+            Checkout <span class="material-symbols-outlined text-[18px]">lock</span>
+          </button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+</neoglyn-cart-drawer>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "cart_title",
+      "label": "Cart Title",
+      "default": "Your Cart"
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free Shipping Threshold ($)",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "show_upsell",
+      "label": "Show Upsell Component",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "upsell_heading",
+      "label": "Upsell Heading",
+      "default": "Pairs perfectly with"
+    }
+  ]
+}
+{% endschema %}

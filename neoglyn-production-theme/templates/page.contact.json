@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "contact": {
+      "type": "neoglyn-contact",
+      "settings": {}
+    }
+  },
+  "order": [
+    "contact"
+  ]
+}

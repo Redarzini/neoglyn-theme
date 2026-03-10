@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "subscriptions": {
+      "type": "neoglyn-subscriptions",
+      "settings": {}
+    }
+  },
+  "order": [
+    "subscriptions"
+  ]
+}

@@ -1,0 +1,191 @@
+{{ 'neoglyn-subscriptions.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-subscriptions page-width section-{{ section.id }}-padding bg-background-light dark:bg-background-dark text-midnight dark:text-slate-100 font-display min-h-screen">
+  
+  <!-- Hero Area -->
+  <div class="max-w-[1200px] mx-auto py-16 lg:py-24 px-6 md:px-10">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div class="flex flex-col gap-6 lg:pr-10">
+        <div class="inline-flex w-fit items-center rounded-full bg-primary/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-[#001F3F] dark:text-primary">
+          {{ section.settings.badge_text }}
+        </div>
+        <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]">{{ section.settings.heading }}</h1>
+        <p class="text-lg text-midnight/70 dark:text-slate-400 leading-relaxed">{{ section.settings.text }}</p>
+        <div class="mt-4">
+          <a href="{{ section.settings.button_link }}" class="inline-flex items-center justify-center rounded-full bg-primary px-10 py-5 text-sm font-bold text-[#001F3F] uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
+            {{ section.settings.button_text }}
+          </a>
+        </div>
+      </div>
+      <div class="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden bg-white shadow-lg border border-slate-100 dark:border-slate-800">
+        <img src="{{ section.settings.hero_image | image_url: width: 1000 | default: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD-QyZKq0999uWutEe8UIdYqBfhnNWpylnSlxee-bQi0rYF5i6iRt9oQrreMBKuVJzRW02TBFMqFksWkcxmEF7nSdWIznyGJmxbVyJpqewJc2PINopvuhNEQH9wuUXUbBeLItKBowzKiN6v2wxcCfJ5ofQBNDC-zvrmmk4WfoU7DKnRQX-cO7XiXxHYmHxgG4ucI0GHVfdWhjTPKak2uCo28K2Vo8w-M20Dp1afn5HJD3QOBDqn0xF3g6eh-UF4SvNwuboOR0KpjsQ' }}" alt="Glow Autopilot" class="absolute inset-0 w-full h-full object-cover">
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits Section -->
+  <div class="bg-white dark:bg-slate-900 py-24 border-y border-slate-100 dark:border-slate-800">
+    <div class="max-w-[1200px] mx-auto px-6 md:px-10">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-extrabold">{{ section.settings.benefits_heading }}</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-10">
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' %}
+            <div class="flex flex-col items-center text-center p-8 rounded-3xl bg-background-light dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:border-primary transition-colors">
+              <div class="size-16 bg-primary/20 rounded-2xl flex items-center justify-center text-[#001F3F] dark:text-primary mb-6">
+                <span class="material-symbols-outlined text-[32px]">{{ block.settings.icon }}</span>
+              </div>
+              <h3 class="text-xl font-bold mb-4">{{ block.settings.title }}</h3>
+              <p class="text-midnight/70 dark:text-slate-400">{{ block.settings.text }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="max-w-[1200px] mx-auto py-24 px-6 md:px-10">
+    <div class="bg-midnight dark:bg-slate-950 rounded-[40px] text-white p-10 md:p-16 lg:p-24 overflow-hidden relative">
+      <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+      
+      <div class="relative z-10">
+        <h2 class="text-3xl md:text-5xl font-extrabold mb-16 max-w-2xl">{{ section.settings.steps_heading }}</h2>
+        
+        <div class="grid md:grid-cols-3 gap-12 relative">
+           <!-- Connecting Line behind steps -->
+           <div class="hidden md:block absolute top-[24px] left-[10%] right-[10%] h-0.5 bg-white/10 z-0"></div>
+           
+           {% for block in section.blocks %}
+             {% if block.type == 'step' %}
+               <div class="relative z-10 flex flex-col gap-6">
+                 <div class="size-12 rounded-full bg-primary text-[#001F3F] font-black text-xl flex items-center justify-center shadow-[0_0_30px_rgba(130,217,185,0.4)]">
+                   {{ forloop.index }}
+                 </div>
+                 <h3 class="text-2xl font-bold">{{ block.settings.title }}</h3>
+                 <p class="text-white/60 text-lg">{{ block.settings.text }}</p>
+               </div>
+             {% endif %}
+           {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Glow Autopilot",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Neoglyn Auto-Replenish"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Never run out of your glow."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Subscribe to Glow Autopilot and receive your favorite serums and conductive gels precisely when you need them. Save 15% on every order, with total control over your deliveries."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Subscriptions"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Benefits Heading",
+      "default": "The Autopilot Perks"
+    },
+    {
+      "type": "text",
+      "id": "steps_heading",
+      "label": "Steps Heading",
+      "default": "Seamless integration into your routine."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon ID",
+          "default": "savings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "15% Off Always"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Lock in your exclusive 15% discount on all auto-replenish orders for the lifetime of your subscription."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Choose your frequency"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Select exactly how often you want your essentials delivered. 30, 60, or 90 days."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glow Autopilot",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "savings", "title": "15% Off Always", "text": "Lock in your exclusive 15% discount on all auto-replenish orders for the lifetime of your subscription." } },
+        { "type": "benefit", "settings": { "icon": "local_shipping", "title": "Free VIP Shipping", "text": "Every Autopilot delivery automatically qualifies for free, expedited shipping to your door." } },
+        { "type": "benefit", "settings": { "icon": "tune", "title": "Total Flexibility", "text": "Pause, skip a delivery, or cancel anytime directly from your Member Dashboard. No questions asked." } },
+        { "type": "step", "settings": { "title": "Build your ritual", "text": "Select your favorite conductive gels, serums, or hydrating mists and add them to Autopilot." } },
+        { "type": "step", "settings": { "title": "Set the cadence", "text": "Choose a 30, 60, or 90 day delivery schedule that perfectly matches your usage habits." } },
+        { "type": "step", "settings": { "title": "Enjoy the glow", "text": "We handle the rest. You'll get an email reminder 3 days before we ship your next box." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

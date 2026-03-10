@@ -1,0 +1,112 @@
+{{ 'neoglyn-popup.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'neoglyn-popup.js' | asset_url }}" defer="defer"></script>
+
+<!-- Only show popup if enabled in theme settings -->
+{% if section.settings.enable_popup %}
+  <neoglyn-popup class="hidden fixed inset-0 z-[100] bg-midnight/60 backdrop-blur-sm transition-opacity opacity-0 flex items-center justify-center p-4" data-delay="{{ section.settings.popup_delay }}" aria-modal="true" role="dialog">
+    <div class="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row transform scale-95 transition-transform duration-500 popup-content font-display">
+      
+      <!-- Close Button -->
+      <button type="button" class="absolute top-4 right-4 z-10 size-10 bg-white/50 backdrop-blur-md rounded-full text-midnight flex items-center justify-center hover:bg-white transition-colors" aria-label="Close dialog" data-close-popup>
+        <span class="material-symbols-outlined text-sm font-bold">close</span>
+      </button>
+
+      <!-- Image Half -->
+      <div class="hidden md:block md:w-1/2 relative bg-background-light">
+        <img src="{{ section.settings.image | image_url: width: 800 | default: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDt1xsn3aFRXJigcRGhoCw1deB21Nuo3WxX3Il6VwDAKTs2tYMWGJ0Sc-Tw-QDOiGFFfdfU7d7mnAd93XrB3KDIJrIYz3-4fk_SNIIIepugn_CFTpxml9-V01G42KVoxUqJ7PEa4bhpBwWj9GI56kclBy8rbHcEJnJDXBAxZpzgjBfX9E3cK7l5NvFZ4QoUaUKQGOKvPCWcVxlJbqxLV7d-ZvvurqiKhY2PjiKTjamQQhskaqtZjA-_B_8oJBhmgRImopG2IQDMZww' }}" alt="Neoglyn Newsletter Image" class="absolute inset-0 w-full h-full object-cover">
+      </div>
+
+      <!-- Content Half -->
+      <div class="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-white relative">
+        <div class="absolute -top-32 -right-32 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none"></div>
+        
+        <div class="relative z-10">
+          <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">{{ section.settings.tagline }}</span>
+          <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-midnight mb-4">{{ section.settings.heading }}</h2>
+          <p class="text-midnight/60 text-base leading-relaxed mb-8">{{ section.settings.text }}</p>
+          
+          {% form 'customer', class: 'flex flex-col gap-4' %}
+            <input type="hidden" name="contact[tags]" value="newsletter, popup">
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-midnight/40">
+                <span class="material-symbols-outlined text-[20px]">mail</span>
+              </span>
+              <input type="email" name="contact[email]" class="w-full bg-background-light border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-midnight focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-midnight/40" placeholder="Enter your email address" required>
+            </div>
+            <button type="submit" class="w-full bg-midnight hover:bg-midnight/90 text-white font-bold tracking-widest uppercase text-sm py-4 rounded-xl transition-all shadow-lg mt-2 cursor-pointer">
+              {{ section.settings.button_text }}
+            </button>
+            <button type="button" class="mt-4 text-xs text-midnight/40 font-bold uppercase tracking-widest hover:text-midnight transition-colors text-center" data-close-popup>
+              {{ section.settings.dismiss_text }}
+            </button>
+          {% endform %}
+        </div>
+      </div>
+      
+    </div>
+  </neoglyn-popup>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Subscription Popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_popup",
+      "label": "Enable Popup",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "popup_delay",
+      "min": 2,
+      "max": 30,
+      "step": 1,
+      "unit": "sec",
+      "label": "Popup Delay",
+      "default": 3
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Popup Image"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Exclusive Access"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Unlock 15% Off Your First Device."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Join the Neoglyn inner circle for early access to new colorways, exclusive bundles, and advanced clinical protocols."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Unlock Offer"
+    },
+    {
+      "type": "text",
+      "id": "dismiss_text",
+      "label": "Dismiss Text",
+      "default": "No thanks, I prefer paying full price"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription Popup"
+    }
+  ]
+}
+{% endschema %}

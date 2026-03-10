@@ -1,0 +1,118 @@
+{{ 'neoglyn-testimonials.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-testimonials page-width section-{{ section.id }}-padding bg-background-light dark:bg-background-dark text-midnight dark:text-slate-100 font-display">
+  <div class="max-w-[1400px] mx-auto py-16 lg:py-24">
+    
+    <div class="text-center mb-16">
+      <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">{{ section.settings.tagline }}</span>
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-midnight dark:text-white max-w-2xl mx-auto">{{ section.settings.heading }}</h2>
+    </div>
+
+    <!-- Testimonials Grid / Slider -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
+      {% for block in section.blocks %}
+        {% if block.type == 'testimonial' %}
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 lg:p-10 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-xl transition-all duration-300">
+            <div>
+              <div class="flex gap-1 mb-6 text-primary">
+                {% for i in (1..5) %}
+                  <span class="material-symbols-outlined text-xl fill-current">star</span>
+                {% endfor %}
+              </div>
+              <h3 class="text-xl font-bold text-midnight dark:text-white mb-4 line-clamp-1">{{ block.settings.title }}</h3>
+              <p class="text-midnight/70 dark:text-slate-400 text-lg leading-relaxed mb-8">
+                "{{ block.settings.text }}"
+              </p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+              <div class="size-12 rounded-full overflow-hidden bg-slate-100 border border-slate-200">
+                {% if block.settings.image %}
+                  <img src="{{ block.settings.image | image_url: width: 150 }}" alt="{{ block.settings.author }}" class="w-full h-full object-cover">
+                {% else %}
+                  <div class="w-full h-full bg-midnight/5 flex items-center justify-center text-midnight font-bold">{{ block.settings.author | slice: 0, 1 }}</div>
+                {% endif %}
+              </div>
+              <div>
+                <p class="font-bold text-midnight dark:text-white text-sm">{{ block.settings.author }}</p>
+                {% if block.settings.detail != blank %}
+                  <p class="text-xs text-midnight/50 dark:text-slate-500">{{ block.settings.detail }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Real Results Testimonials",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Real Results"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Transformed skin, told by you."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Headline",
+          "default": "Completely changed my routine."
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testimonial Text",
+          "default": "I've tried every professional treatment out there, but having this technology at home is a game changer. My skin has never looked so sculpted and radiant."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Author Photo"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Sarah Jenkins"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Author Detail (Optional)",
+          "default": "Verified Buyer • Uses Glyn Pro"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Real Results Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "title": "Incredible firmness.", "text": "After 2 weeks of consistent use, the difference in my jawline is undeniable. The device is sleek, intuitive, and the mint color looks gorgeous on my vanity.", "author": "Elena M.", "detail": "Age 42" } },
+        { "type": "testimonial", "settings": { "title": "The glow is real.", "text": "I was skeptical, but the red light therapy function actually works. My complexion is significantly more even and people keep asking what foundation I'm wearing. (I'm not!)", "author": "David C.", "detail": "Verified Buyer" } },
+        { "type": "testimonial", "settings": { "title": "Spa quality at home.", "text": "This feels exactly like the $300 facials I used to get. The heat settings are perfectly calibrated. Neoglyn has won me over completely.", "author": "Jessica W.", "detail": "Beauty Editor" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

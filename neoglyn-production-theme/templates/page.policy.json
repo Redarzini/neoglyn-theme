@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "policy": {
+      "type": "neoglyn-policy",
+      "settings": {}
+    }
+  },
+  "order": [
+    "policy"
+  ]
+}

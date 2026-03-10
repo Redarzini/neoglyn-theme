@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "press": {
+      "type": "neoglyn-press",
+      "settings": {}
+    }
+  },
+  "order": [
+    "press"
+  ]
+}
