@@ -1,56 +1,192 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+{{ 'neoglyn-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="neoglyn-footer bg-midnight dark:bg-black text-white font-display border-t border-white/5">
+  
+  <!-- Newsletter Ribbon -->
+  <div class="border-b border-white/5 py-12 px-6 lg:px-10">
+    <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="max-w-md text-center md:text-left">
+        <h3 class="text-2xl font-bold mb-2">{{ section.settings.newsletter_heading }}</h3>
+        <p class="text-white/60 text-sm">{{ section.settings.newsletter_text }}</p>
+      </div>
+      {% form 'customer', class: 'w-full max-w-md flex relative' %}
+        <input type="hidden" name="contact[tags]" value="newsletter, footer">
+        <input type="email" name="contact[email]" class="w-full bg-white/5 border border-white/10 rounded-full py-4 pl-6 pr-32 text-white focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-white/40" placeholder="Your email address" required>
+        <button type="submit" class="absolute right-2 top-2 bottom-2 bg-primary hover:bg-primary/90 text-midnight font-bold tracking-widest uppercase text-xs px-6 rounded-full transition-all">Join</button>
+      {% endform %}
+    </div>
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
+  <!-- Main Footer Content -->
+  <div class="max-w-[1400px] mx-auto py-16 px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 border-b border-white/5">
+    
+    <!-- Brand Pillar -->
+    <div class="lg:col-span-4 flex flex-col gap-6">
+      <h2 class="text-3xl font-extrabold tracking-tight">{{ shop.name }}</h2>
+      <p class="text-white/60 text-sm leading-relaxed max-w-sm">{{ section.settings.brand_text }}</p>
+      
+      <!-- Socials -->
+      <div class="flex gap-4 mt-4">
+        {% if section.settings.social_instagram != blank %}
+          <a href="{{ section.settings.social_instagram }}" class="size-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-midnight transition-all">
+            <span class="material-symbols-outlined text-sm">photo_camera</span>
+          </a>
+        {% endif %}
+        {% if section.settings.social_tiktok != blank %}
+          <a href="{{ section.settings.social_tiktok }}" class="size-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-midnight transition-all">
+            <span class="material-symbols-outlined text-sm">play_circle</span>
+          </a>
+        {% endif %}
+        {% if section.settings.social_youtube != blank %}
+          <a href="{{ section.settings.social_youtube }}" class="size-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-midnight transition-all">
+            <span class="material-symbols-outlined text-sm">smart_display</span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Navigation Blocks -->
+    {% for block in section.blocks %}
+      {% if block.type == 'link_list' %}
+        <div class="lg:col-span-2">
+          <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-6">{{ block.settings.heading }}</h4>
+          <ul class="flex flex-col gap-4">
+            {% for link in linklists[block.settings.menu].links %}
+              <li>
+                <a href="{{ link.url }}" class="text-sm text-white/60 hover:text-white transition-colors">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     {% endfor %}
+    
+    <!-- Contact Block -->
+    <div class="lg:col-span-3">
+      <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-6">Concierge</h4>
+      <ul class="flex flex-col gap-4 text-sm text-white/60">
+        <li class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-white/40 text-[18px]">mail</span>
+          <a href="mailto:{{ section.settings.contact_email }}" class="hover:text-white transition-colors">{{ section.settings.contact_email }}</a>
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-white/40 text-[18px]">call</span>
+          <a href="tel:{{ section.settings.contact_phone }}" class="hover:text-white transition-colors">{{ section.settings.contact_phone }}</a>
+        </li>
+        <li class="mt-4">
+          <p class="text-xs text-white/40 uppercase tracking-widest">{{ section.settings.contact_hours }}</p>
+        </li>
+      </ul>
+    </div>
+
   </div>
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+  <!-- Copyright Bar -->
+  <div class="max-w-[1400px] mx-auto py-8 px-6 lg:px-10 flex flex-col md:flex-row items-center justify-between gap-6 opacity-60 text-xs">
+    <div class="flex gap-6">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <a href="/policies/privacy-policy" class="hover:text-white">Privacy</a>
+      <a href="/policies/terms-of-service" class="hover:text-white">Terms</a>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      {% if section.settings.show_payment_icons %}
+        {% for type in shop.enabled_payment_types %}
+          <div class="opacity-70 grayscale hover:grayscale-0 transition-all">
+             {{ type | payment_type_svg_tag: class: 'h-6' }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
   </div>
+
 </footer>
-
-{% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.footer",
+  "name": "Neoglyn Comprehensive",
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter Heading",
+      "default": "Join the Inner Circle."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter Text",
+      "default": "Exclusive early access to new colorways and clinical protocols."
+    },
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Brand Description",
+      "default": "Bridging the gap between clinical excellence and your daily ritual with high-end tools designed to elevate your vanity."
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "social_tiktok",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "url",
+      "id": "social_youtube",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Support Email",
+      "default": "concierge@neoglyn.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Support Phone",
+      "default": "1-800-555-GLOW"
+    },
+    {
+      "type": "text",
+      "id": "contact_hours",
+      "label": "Support Hours",
+      "default": "MON-FRI 9AM-6PM EST"
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
+      "label": "Show Payment Icons",
       "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Menu",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Comprehensive"
     }
   ]
 }
