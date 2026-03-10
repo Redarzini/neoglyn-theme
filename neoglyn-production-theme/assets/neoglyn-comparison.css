@@ -1,0 +1,74 @@
+/* neoglyn-comparison.css */
+.neoglyn-comparison {
+  padding: 6rem 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .neoglyn-comparison {
+    padding: 6rem 5rem;
+  }
+}
+
+.neoglyn-comparison__container {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.neoglyn-comparison__title {
+  font-size: 1.875rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--color-foreground);
+}
+
+.neoglyn-comparison__wrapper {
+  overflow-x: auto;
+}
+
+.neoglyn-comparison__table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.neoglyn-comparison__table th {
+  padding: 1.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0, 31, 63, 0.4);
+  border-bottom: 2px solid var(--color-foreground);
+}
+
+.neoglyn-comparison__table th.neoglyn-comparison__highlight-col {
+  font-size: 1.125rem;
+  color: var(--color-foreground);
+  background-color: #f8fafc;
+  font-weight: 900;
+}
+
+.neoglyn-comparison__table td {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.neoglyn-comparison__feature-name {
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.neoglyn-comparison__highlight-col {
+  background-color: rgba(248, 250, 252, 0.5); /* bg-slate-50/50 */
+}
+
+.neoglyn-comparison__our-spec {
+  color: var(--color-foreground);
+}
+
+.neoglyn-comparison__standard-spec {
+  color: rgba(0, 31, 63, 0.4);
+}
+
+/* Hardcode highlight for specific row as in Stitch if needed but standard styling works best here */

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "tracking": {
+      "type": "neoglyn-tracking",
+      "settings": {}
+    }
+  },
+  "order": [
+    "tracking"
+  ]
+}

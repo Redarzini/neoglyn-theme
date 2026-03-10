@@ -1,0 +1,91 @@
+/* neoglyn-instagram.css */
+.neoglyn-instagram {
+  margin-bottom: 5rem;
+  padding: 0 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .neoglyn-instagram {
+    padding: 0 5rem;
+  }
+}
+
+.neoglyn-instagram__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.neoglyn-instagram__subtitle {
+  color: var(--color-cta);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.neoglyn-instagram__title {
+  color: var(--color-foreground);
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.neoglyn-instagram__text {
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+.neoglyn-instagram__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .neoglyn-instagram__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.neoglyn-instagram__item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background-color: #f1f4f3;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: block;
+}
+
+.neoglyn-instagram__image {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  transition: transform 0.5s ease;
+}
+
+.neoglyn-instagram__item:hover .neoglyn-instagram__image {
+  transform: scale(1.05);
+}
+
+.neoglyn-instagram__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(18, 23, 21, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.neoglyn-instagram__item:hover .neoglyn-instagram__overlay {
+  opacity: 1;
+}
+
+.neoglyn-instagram__overlay svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: #fff;
+  color: #fff;
+}

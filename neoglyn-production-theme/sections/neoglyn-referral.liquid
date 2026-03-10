@@ -1,0 +1,392 @@
+{{ 'neoglyn-referral.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-referral page-width section-{{ section.id }}-padding bg-background-light dark:bg-background-dark text-midnight dark:text-slate-100 min-h-screen">
+  
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <!-- Sidebar Nav -->
+    <aside class="lg:col-span-3 space-y-6 hidden md:block">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="neoglyn-referral__avatar-outer size-12 rounded-full overflow-hidden border-2 border-primary p-0.5">
+            <div class="neoglyn-referral__avatar-inner w-full h-full rounded-full bg-cover bg-center" style="background-image: url('{{ section.settings.profile_image | image_url: width: 100 | default: "https://lh3.googleusercontent.com/aida-public/AB6AXuAp0IZUwklXaE2dqMXOaGUplpZXX8HhAQbjh8TwdGVo4q_TxS9V9aGsTScze5I5UvcM1q5MLfNRpc_nNo_QIAOoLo0t5rn8_yaw1bEJWoxKFrB2Aj0GYN6ic6sZmEHcJmrxw27-dDZN65r75dBSmbpRjxqnP-7YtUWU-ega0mrMDIN4rlWsdhRamJ798y1p3fxG_WWtYbyX3APCBl3RS3U21IUUlIy4-uS5RljuuD_FeUXdCCi253eukjbd0O2S0LRPiOg8G2m_Kcs" }}')"></div>
+          </div>
+          <div>
+            <h3 class="font-bold text-midnight dark:text-white leading-tight">{{ customer.name | default: 'Alex Rivera' }}</h3>
+            <p class="text-xs text-slate-500 font-medium">{{ section.settings.member_tier | default: 'Premium Member' }}</p>
+          </div>
+        </div>
+        
+        <nav class="space-y-2">
+          {% for block in section.blocks %}
+            {% if block.type == 'nav_link' %}
+              <a class="flex items-center gap-3 px-4 py-3 rounded-xl {% if linklists.main-menu.links contains block.settings.link %}bg-primary-10 text-primary{% else %}text-slate-600 hover:bg-primary-10 hover:text-primary{% endif %} transition-all" href="{{ block.settings.link }}">
+                <span class="material-symbols-outlined {% if linklists.main-menu.links contains block.settings.link %}fill-current{% endif %}">{{ block.settings.icon }}</span>
+                <span class="font-bold text-sm">{{ block.settings.title }}</span>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </nav>
+      </div>
+      
+      <div class="bg-primary-5 rounded-2xl p-6 border border-primary-20">
+        <h4 class="font-bold text-sm mb-2">{{ section.settings.support_title }}</h4>
+        <p class="text-xs text-slate-500 mb-4 leading-relaxed">{{ section.settings.support_text }}</p>
+        <a href="{{ section.settings.support_link }}" class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+          Support Center <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <div class="lg:col-span-9 space-y-8">
+      
+      <!-- Hero Section -->
+      <div class="neoglyn-referral__hero relative overflow-hidden rounded-3xl bg-midnight dark:bg-slate-900 p-8 lg:p-12 text-white">
+        <div class="relative z-10 max-w-lg">
+          <h1 class="text-4xl lg:text-5xl font-black tracking-tight mb-4">{{ section.settings.hero_heading }}</h1>
+          <p class="text-slate-300 text-lg mb-8 leading-relaxed">{{ section.settings.hero_text }}</p>
+          <a href="{{ section.settings.hero_button_link }}" class="inline-flex bg-primary text-midnight px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all items-center gap-2">
+            {{ section.settings.hero_button_text }} <span class="material-symbols-outlined">send</span>
+          </a>
+        </div>
+        <!-- Abstract background element -->
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
+          <div class="absolute inset-0 bg-gradient-to-br from-primary to-transparent blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-slate-500 font-semibold text-sm">{{ section.settings.stat_1_title }}</span>
+            <div class="size-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">group</span>
+            </div>
+          </div>
+          <p class="text-3xl font-black text-midnight dark:text-white">{{ section.settings.stat_1_value }}</p>
+          <p class="text-xs text-green-500 font-bold mt-2 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">trending_up</span> {{ section.settings.stat_1_subtext }}
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-slate-500 font-semibold text-sm">{{ section.settings.stat_2_title }}</span>
+            <div class="size-8 bg-primary-20 text-emerald-600 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">payments</span>
+            </div>
+          </div>
+          <p class="text-3xl font-black text-midnight dark:text-white">{{ section.settings.stat_2_value }}</p>
+          <p class="text-xs text-slate-400 font-medium mt-2">{{ section.settings.stat_2_subtext }}</p>
+        </div>
+        
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-slate-500 font-semibold text-sm">{{ section.settings.stat_3_title }}</span>
+            <div class="size-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">schedule</span>
+            </div>
+          </div>
+          <p class="text-3xl font-black text-midnight dark:text-white">{{ section.settings.stat_3_value }}</p>
+          <p class="text-xs text-slate-400 font-medium mt-2">{{ section.settings.stat_3_subtext }}</p>
+        </div>
+      </div>
+
+      <!-- Referral Link Section -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="flex-1">
+            <h2 class="text-2xl font-black text-midnight dark:text-white mb-2">{{ section.settings.share_title }}</h2>
+            <p class="text-slate-500 text-sm">{{ section.settings.share_text }}</p>
+            <div class="mt-6 flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <span class="neoglyn-referral__link px-3 text-sm font-medium text-slate-500 overflow-hidden text-ellipsis whitespace-nowrap flex-1">{{ shop.url }}/?ref={{ customer.id | default: '12345' }}</span>
+              <button class="bg-primary text-midnight px-6 py-2.5 rounded-lg font-bold text-sm hover:brightness-95 transition-all flex items-center gap-2 shrink-0" onclick="navigator.clipboard.writeText('{{ shop.url }}/?ref={{ customer.id | default: '12345' }}'); alert('Copied to clipboard!');">
+                <span class="material-symbols-outlined text-[18px]">content_copy</span> Copy
+              </button>
+            </div>
+          </div>
+          <div class="flex flex-col gap-3 shrink-0">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center md:text-left">Quick Share</p>
+            <div class="flex gap-2 justify-center">
+              <a href="#" class="size-12 rounded-xl bg-blue-50 text-blue-400 flex items-center justify-center hover:bg-blue-400 hover:text-white transition-all">
+                <span class="material-symbols-outlined">share</span>
+              </a>
+              <a href="#" class="size-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+                <span class="material-symbols-outlined">thumb_up</span>
+              </a>
+              <a href="#" class="size-12 rounded-xl bg-green-50 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all">
+                <span class="material-symbols-outlined">forum</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Referrals Table -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm overflow-x-auto">
+        <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+          <h3 class="text-xl font-bold text-midnight dark:text-white">{{ section.settings.table_title }}</h3>
+          <button class="text-primary font-bold text-sm hover:underline">View All</button>
+        </div>
+        <table class="w-full text-left min-w-[500px]">
+          <thead class="bg-slate-50 dark:bg-slate-800/50">
+            <tr>
+              <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Friend</th>
+              <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Date</th>
+              <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-right">Reward</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            {% for block in section.blocks %}
+              {% if block.type == 'referral' %}
+                <tr>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="size-8 rounded-full bg-slate-200 bg-cover" style="background-image: url('{{ block.settings.image | image_url: width: 100 }}')"></div>
+                      <span class="font-bold text-sm text-midnight dark:text-white">{{ block.settings.name }}</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-slate-500">{{ block.settings.date }}</td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider {% if block.settings.status == 'Completed' %}bg-green-100 text-green-700{% else %}bg-amber-100 text-amber-700{% endif %}">{{ block.settings.status }}</span>
+                  </td>
+                  <td class="px-6 py-4 text-sm font-bold {% if block.settings.status == 'Completed' %}text-midnight dark:text-white{% else %}text-slate-400{% endif %} text-right">
+                    {{ block.settings.reward }}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Referral Rewards",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+       "type": "header",
+       "content": "Sidebar"
+    },
+    {
+      "type": "image_picker",
+      "id": "profile_image",
+      "label": "Fallback Profile Image"
+    },
+    {
+      "type": "text",
+      "id": "member_tier",
+      "label": "Member Tier Script",
+      "default": "Premium Member"
+    },
+    {
+      "type": "text",
+      "id": "support_title",
+      "label": "Support Block Title",
+      "default": "Need help?"
+    },
+    {
+      "type": "textarea",
+      "id": "support_text",
+      "label": "Support Block Text",
+      "default": "Check our FAQ or contact support for referral questions."
+    },
+    {
+      "type": "url",
+      "id": "support_link",
+      "label": "Support Link"
+    },
+    {
+       "type": "header",
+       "content": "Hero Area"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero Heading",
+      "default": "Refer & Earn Rewards"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Hero Text",
+      "default": "Share the love for Neoglyn and get rewarded for every friend who joins. Earn up to $50 for each successful referral."
+    },
+    {
+      "type": "text",
+      "id": "hero_button_text",
+      "label": "Hero Button Text",
+      "default": "Start Inviting"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Hero Button Link"
+    },
+    {
+       "type": "header",
+       "content": "Stats Grid"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_title",
+      "label": "Stat 1 Title",
+      "default": "Total Referrals"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Stat 1 Value",
+      "default": "12"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_subtext",
+      "label": "Stat 1 Subtext",
+      "default": "+2 this month"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_title",
+      "label": "Stat 2 Title",
+      "default": "Rewards Earned"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Stat 2 Value",
+      "default": "$120.00"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_subtext",
+      "label": "Stat 2 Subtext",
+      "default": "Paid out to your wallet"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_title",
+      "label": "Stat 3 Title",
+      "default": "Pending"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Stat 3 Value",
+      "default": "2"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_subtext",
+      "label": "Stat 3 Subtext",
+      "default": "Awaiting verification"
+    },
+    {
+       "type": "header",
+       "content": "Share Link Area"
+    },
+    {
+      "type": "text",
+      "id": "share_title",
+      "label": "Share Title",
+      "default": "Your Referral Link"
+    },
+    {
+      "type": "textarea",
+      "id": "share_text",
+      "label": "Share Text",
+      "default": "Copy this link and share it on social media or send it directly to your friends."
+    },
+    {
+      "type": "text",
+      "id": "table_title",
+      "label": "Table Title",
+      "default": "Recent Referrals"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Navigation Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link Title"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon ID",
+          "default": "dashboard"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    },
+    {
+      "type": "referral",
+      "name": "Mock Referral Record",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Friend Profile Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Friend Name",
+          "default": "Sarah Jenkins"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "Oct 12, 2023"
+        },
+        {
+          "type": "select",
+          "id": "status",
+          "label": "Status",
+          "options": [
+            { "value": "Completed", "label": "Completed" },
+            { "value": "Pending", "label": "Pending" }
+          ],
+          "default": "Completed"
+        },
+        {
+          "type": "text",
+          "id": "reward",
+          "label": "Reward Amount",
+          "default": "$10.00"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Referral Rewards",
+      "blocks": [
+        { "type": "nav_link", "settings": { "title": "Home", "icon": "home", "link": "#" } },
+        { "type": "nav_link", "settings": { "title": "Rewards", "icon": "card_giftcard", "link": "#" } },
+        { "type": "nav_link", "settings": { "title": "Wallet", "icon": "account_balance_wallet", "link": "#" } },
+        { "type": "nav_link", "settings": { "title": "Settings", "icon": "settings", "link": "#" } },
+        { "type": "referral", "settings": { "name": "Sarah Jenkins", "date": "Oct 12, 2023", "status": "Completed", "reward": "$10.00" } },
+        { "type": "referral", "settings": { "name": "David Miller", "date": "Oct 10, 2023", "status": "Pending", "reward": "--" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

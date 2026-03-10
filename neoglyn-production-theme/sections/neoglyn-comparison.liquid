@@ -1,0 +1,85 @@
+{{ 'neoglyn-comparison.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-comparison page-width section-{{ section.id }}-padding bg-background-light">
+  <div class="neoglyn-comparison__container">
+    <h3 class="neoglyn-comparison__title text-midnight">{{ section.settings.heading }}</h3>
+    
+    <div class="neoglyn-comparison__wrapper">
+      <table class="neoglyn-comparison__table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="neoglyn-comparison__highlight-col">{{ section.settings.product_name }}</th>
+            <th>Industry Standard</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for block in section.blocks %}
+            <tr>
+              <td class="neoglyn-comparison__feature-name">{{ block.settings.feature }}</td>
+              <td class="neoglyn-comparison__highlight-col neoglyn-comparison__our-spec">{{ block.settings.our_spec }}</td>
+              <td class="neoglyn-comparison__standard-spec">{{ block.settings.standard_spec }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Comparison",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Technical Specifications"
+    },
+    {
+      "type": "text",
+      "id": "product_name",
+      "label": "Product Name",
+      "default": "Flagship Device"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Specification",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature",
+          "label": "Feature"
+        },
+        {
+          "type": "text",
+          "id": "our_spec",
+          "label": "Our Specification"
+        },
+        {
+          "type": "text",
+          "id": "standard_spec",
+          "label": "Standard Specification"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Comparison",
+      "blocks": [
+        { "type": "spec", "settings": { "feature": "RF Frequency", "our_spec": "1.2 MHz Multi-Polar", "standard_spec": "0.5 MHz Mono-Polar" } },
+        { "type": "spec", "settings": { "feature": "LED Spectrum", "our_spec": "Dual 630nm/830nm", "standard_spec": "Single 630nm" } },
+        { "type": "spec", "settings": { "feature": "Sensing Technology", "our_spec": "Active Thermal Control", "standard_spec": "Passive On/Off" } },
+        { "type": "spec", "settings": { "feature": "Casing Material", "our_spec": "Anodized Silver Ion", "standard_spec": "Polycarbonate Plastic" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

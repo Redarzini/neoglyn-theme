@@ -1,0 +1,313 @@
+{{ 'neoglyn-about.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-about bg-white dark:bg-background-dark text-midnight dark:text-slate-100 font-display">
+  
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden px-6 py-16 lg:px-10 lg:py-24">
+    <div class="mx-auto max-w-[1200px]">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div class="flex flex-col gap-8">
+          <div class="inline-flex w-fit items-center rounded-full bg-primary/10 px-4 py-1 text-xs font-bold uppercase tracking-widest text-midnight dark:text-primary">
+            {{ section.settings.hero_tag }}
+          </div>
+          <h1 class="text-5xl font-extrabold leading-[1.1] tracking-tight text-midnight dark:text-white lg:text-7xl">
+            {{ section.settings.hero_heading_1 }} <span class="text-primary">{{ section.settings.hero_heading_highlight }}</span> {{ section.settings.hero_heading_2 }}
+          </h1>
+          <p class="max-w-lg text-lg leading-relaxed text-midnight/70 dark:text-slate-400">
+            {{ section.settings.hero_text }}
+          </p>
+          <div class="flex gap-4">
+            <a href="{{ section.settings.hero_button_link }}" class="flex items-center justify-center rounded-full bg-primary px-8 py-4 text-sm font-bold text-midnight shadow-lg shadow-primary/20 transition-transform hover:scale-105">
+              {{ section.settings.hero_button_text }}
+            </a>
+          </div>
+        </div>
+        <div class="relative aspect-square overflow-hidden rounded-2xl bg-background-light lg:aspect-[4/5] border border-slate-100 dark:border-slate-800">
+          <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ section.settings.hero_image | image_url: width: 800 | default: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFyi50bg3ms8KCs1ycphE0Fgp-1opqXrBeVH8TtN25xXkgaExUEXQLWq0AKMF4WXFxQ4TT_azhMeY_ih8L2xtrrYSrfLICxhFtRfvr8B-Qej-1l-kKCfU83SkRgTyrdymy3DgCdfhioRGW8Z1Ttt8elMBwzur-1pyB3mcLvshxBR39pdmbv8_uhzBGO2AW-VQrfAAk-BYMVdXgtyVQ4EW-h87jTqNebYlA1FH5oRvu6VQNIxRyrfvzAu6Qb-FNWLMeRcNR1Plp1UDc" }}')"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Mission -->
+  <section class="bg-background-light dark:bg-slate-900 px-6 py-20 lg:px-10 lg:py-32 border-y border-slate-100 dark:border-slate-800">
+    <div class="mx-auto max-w-[1200px]">
+      <div class="flex flex-col items-center text-center">
+        <span class="material-symbols-outlined text-4xl text-primary mb-6">verified</span>
+        <h2 class="mb-6 text-3xl font-bold tracking-tight text-midnight dark:text-white lg:text-5xl">{{ section.settings.mission_heading }}</h2>
+        <p class="max-w-2xl text-lg leading-relaxed text-midnight/70 dark:text-slate-400">
+          {{ section.settings.mission_text }}
+        </p>
+      </div>
+      <div class="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {% for block in section.blocks %}
+          {% if block.type == 'mission_pillar' %}
+            <div class="group rounded-2xl bg-white dark:bg-slate-800 p-8 transition-all hover:shadow-xl border border-slate-100 dark:border-slate-800">
+              <div class="mb-6 inline-flex size-12 items-center justify-center rounded-xl bg-primary-20 text-midnight dark:text-white">
+                <span class="material-symbols-outlined">{{ block.settings.icon }}</span>
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-midnight dark:text-white">{{ block.settings.title }}</h3>
+              <p class="text-midnight/60 dark:text-slate-400 leading-relaxed">{{ block.settings.text }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- The Neoglyn Story -->
+  <section class="px-6 py-20 lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-[1200px]">
+      <div class="flex flex-col gap-16 lg:flex-row lg:items-center">
+        <div class="relative order-2 aspect-video overflow-hidden rounded-2xl bg-background-light dark:bg-slate-900 lg:order-1 lg:w-1/2 border border-slate-100 dark:border-slate-800">
+          <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ section.settings.story_image | image_url: width: 800 | default: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYkGk0WTkEFu4t3M9x3MPVUns5X39gj5EnPAxVUt40ZdmO3JTar_nneiMaqgy7FUuux212Eu9H8MIx7p0tq9ak4U1KpcV9pOhQM0k75emWILKKGYMJ6tOCX25bZsxUVHK46PGZEdQJCXUkTV7bKHImy21nnh-d83arQ-8HoIJ7ZXiyq3K3Tv-z9WWTDuHzUOaYIwG6JBBCGtxFdAmwue9NXWOCA9clmbpMuH0qcd8z0rddQ6kyz21RRMwlhszBuRFelvY612xfT-0" }}')"></div>
+        </div>
+        <div class="order-1 flex flex-col gap-6 lg:order-2 lg:w-1/2">
+          <h2 class="text-4xl font-bold tracking-tight text-midnight dark:text-white lg:text-5xl">{{ section.settings.story_heading }}</h2>
+          <div class="text-lg text-midnight/70 dark:text-slate-400 space-y-4">
+             {{ section.settings.story_text }}
+          </div>
+          <div class="mt-4 flex items-center gap-4">
+            <div class="h-px flex-1 bg-background-light dark:bg-slate-800"></div>
+            <span class="font-serif italic text-midnight/40 dark:text-slate-500 text-xl">{{ section.settings.story_since }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="bg-midnight dark:bg-slate-950 px-6 py-20 text-white lg:px-10 lg:py-32">
+    <div class="mx-auto max-w-[1200px]">
+      <div class="mb-16 text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-white lg:text-5xl">{{ section.settings.stats_heading }}</h2>
+      </div>
+      <div class="grid gap-12 lg:grid-cols-4">
+        {% for block in section.blocks %}
+          {% if block.type == 'stat' %}
+            <div class="text-center">
+              <div class="mb-4 text-4xl font-extrabold text-primary">{{ block.settings.value }}</div>
+              <p class="text-sm font-medium uppercase tracking-widest text-primary/60">{{ block.settings.title }}</p>
+              <p class="mt-2 text-white/70">{{ block.settings.text }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter / CTA -->
+  <section class="px-6 py-20 lg:px-10 bg-white dark:bg-background-dark">
+    <div class="mx-auto max-w-[1200px] rounded-3xl bg-primary-10 p-8 lg:p-20 border border-primary-20">
+      <div class="flex flex-col items-center justify-between gap-10 lg:flex-row">
+        <div class="max-w-lg">
+          <h2 class="mb-4 text-3xl font-bold tracking-tight text-midnight dark:text-white lg:text-4xl">{{ section.settings.cta_heading }}</h2>
+          <p class="text-lg text-midnight/70 dark:text-slate-400">{{ section.settings.cta_text }}</p>
+        </div>
+        
+        {% form 'customer', class: 'flex w-full max-w-md flex-col gap-3 sm:flex-row' %}
+          <input type="hidden" name="contact[tags]" value="newsletter, about">
+          <input type="email" name="contact[email]" class="flex-1 rounded-full border-none bg-white dark:bg-slate-800 px-6 py-4 text-midnight dark:text-white shadow-sm focus:ring-2 focus:ring-primary placeholder:text-slate-400" placeholder="Your email address" required />
+          <button type="submit" class="rounded-full bg-midnight dark:bg-primary px-8 py-4 font-bold text-white dark:text-midnight transition-all hover:bg-midnight/90 dark:hover:brightness-95">Sign Up</button>
+        {% endform %}
+        
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn About Us",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+       "type": "header",
+       "content": "Hero Section"
+    },
+    {
+      "type": "text",
+      "id": "hero_tag",
+      "label": "Hero Tag",
+      "default": "The Future of Skincare"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_1",
+      "label": "Hero Heading Part 1",
+      "default": "Professional Beauty,"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_highlight",
+      "label": "Hero Heading Primary Color Word",
+      "default": "Redefined"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_2",
+      "label": "Hero Heading Part 2",
+      "default": "at Home."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Hero Text",
+      "default": "Neoglyn bridges the gap between clinical excellence and your daily ritual with high-end tools designed for everyone. We believe luxury isn't a place you go—it's a standard you keep."
+    },
+    {
+      "type": "text",
+      "id": "hero_button_text",
+      "label": "Hero Button Text",
+      "default": "Explore the Collection"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Hero Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+       "type": "header",
+       "content": "Mission Section"
+    },
+    {
+      "type": "text",
+      "id": "mission_heading",
+      "label": "Mission Heading",
+      "default": "Our Mission"
+    },
+    {
+      "type": "textarea",
+      "id": "mission_text",
+      "label": "Mission Text",
+      "default": "At Neoglyn, we believe that professional-grade skincare shouldn't be confined to a spa. Our mission is to democratize high-end beauty technology, empowering you to achieve salon-quality results from the comfort of your home."
+    },
+    {
+       "type": "header",
+       "content": "Story Section"
+    },
+    {
+      "type": "text",
+      "id": "story_heading",
+      "label": "Story Heading",
+      "default": "The Neoglyn Story"
+    },
+    {
+      "type": "richtext",
+      "id": "story_text",
+      "label": "Story Content",
+      "default": "<p>Founded by a team of aesthetic experts and design visionaries, Neoglyn was born from a singular observation: the tools used by professionals were effective but uninviting. We set out to change that.</p><p>Our journey began in a small studio with one goal: to create a device that felt as good to hold as the results it produced.</p>"
+    },
+    {
+      "type": "text",
+      "id": "story_since",
+      "label": "Since Text",
+      "default": "Since 2021"
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image",
+      "label": "Story Image"
+    },
+    {
+       "type": "header",
+       "content": "Stats Section"
+    },
+    {
+      "type": "text",
+      "id": "stats_heading",
+      "label": "Stats Heading",
+      "default": "Why Choose Neoglyn?"
+    },
+    {
+       "type": "header",
+       "content": "CTA Section"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA Heading",
+      "default": "Join the Evolution"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "Subscribe to receive exclusive access to new launches, skincare rituals, and professional tips."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mission_pillar",
+      "name": "Mission Pillar",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon Name",
+          "default": "diamond"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Uncompromising Elegance"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Every Neoglyn tool is designed to be a centerpiece of your vanity, blending midnight aesthetics with mint accents."
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Big Value",
+          "default": "98%"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Stat Title",
+          "default": "Visible Radiance"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description",
+          "default": "Reported more luminous skin after just 2 weeks of use."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn About Us",
+      "blocks": [
+        { "type": "mission_pillar", "settings": { "icon": "diamond", "title": "Uncompromising Elegance", "text": "Every Neoglyn tool is designed to be a centerpiece of your vanity, blending midnight aesthetics with mint accents." } },
+        { "type": "mission_pillar", "settings": { "icon": "bolt", "title": "Simplified Innovation", "text": "We translate complex light and sonic technologies into intuitive devices that fit seamlessly into your morning routine." } },
+        { "type": "mission_pillar", "settings": { "icon": "public", "title": "Total Accessibility", "text": "Exceptional skin health shouldn't be a luxury of location. We bring the world's best tech to your fingertips, anywhere." } },
+        { "type": "stat", "settings": { "value": "98%", "title": "Visible Radiance", "text": "Reported more luminous skin after just 2 weeks of use." } },
+        { "type": "stat", "settings": { "value": "15+", "title": "Design Awards", "text": "Recognized globally for aesthetic and ergonomic excellence." } },
+        { "type": "stat", "settings": { "value": "24/7", "title": "Concierge Support", "text": "Personal skin consultations available whenever you need." } },
+        { "type": "stat", "settings": { "value": "100%", "title": "Vegan & Cruelty Free", "text": "Ethically sourced materials and zero animal testing." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

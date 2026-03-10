@@ -1,0 +1,76 @@
+/* neoglyn-how-to-use.css */
+.neoglyn-how-to-use {
+  color: #fff;
+  padding: 6rem 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .neoglyn-how-to-use {
+    padding: 6rem 5rem;
+  }
+}
+
+.neoglyn-how-to-use__container {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.neoglyn-how-to-use__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.neoglyn-how-to-use__title {
+  font-size: 2.25rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.neoglyn-how-to-use__subtitle {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  color: var(--color-cta);
+}
+
+.neoglyn-how-to-use__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media screen and (min-width: 768px) {
+  .neoglyn-how-to-use__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.neoglyn-how-to-use__step {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.neoglyn-how-to-use__number {
+  font-size: 3.75rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.1);
+  transition: color 0.3s ease;
+}
+
+.neoglyn-how-to-use__step:hover .neoglyn-how-to-use__number {
+  color: var(--color-cta);
+}
+
+.neoglyn-how-to-use__step-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.neoglyn-how-to-use__step-text {
+  color: #94a3b8;
+  line-height: 1.625;
+}

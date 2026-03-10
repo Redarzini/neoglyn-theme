@@ -1,0 +1,277 @@
+{{ 'neoglyn-journal.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-journal bg-background-light dark:bg-background-dark text-midnight dark:text-slate-100 min-h-screen pb-16">
+  <div class="max-w-7xl mx-auto w-full px-6 md:px-12 py-12">
+    
+    <!-- Journal Header -->
+    <div class="flex flex-col gap-4 mb-12">
+      <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs">{{ section.settings.pre_heading }}</span>
+      <h1 class="text-midnight dark:text-slate-100 text-5xl md:text-7xl font-light tracking-tight">{{ section.settings.heading }}</h1>
+      <p class="text-slate-500 dark:text-slate-400 text-lg max-w-xl font-light leading-relaxed">
+        {{ section.settings.description }}
+      </p>
+    </div>
+
+    <!-- Categories -->
+    <div class="mb-12 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex gap-10 overflow-x-auto pb-px no-scrollbar">
+        {% for block in section.blocks %}
+          {% if block.type == 'category' %}
+            <a href="{{ block.settings.link }}" class="flex flex-col items-center justify-center {% if forloop.first %}border-b-2 border-midnight dark:border-primary text-midnight dark:text-primary{% else %}border-b-2 border-transparent text-slate-400 hover:text-midnight dark:hover:text-slate-200{% endif %} pb-4 transition-all whitespace-nowrap">
+              <p class="text-sm font-bold tracking-widest uppercase">{{ block.settings.title }}</p>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Featured Post -->
+    {% if section.settings.featured_article != blank %}
+      {% assign article = articles[section.settings.featured_article] %}
+      <section class="mb-20 container-type-inline-size">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800">
+          <div class="h-[400px] md:h-full bg-center bg-no-repeat bg-cover" style="background-image: url('{{ article.image | image_url: width: 800 }}');"></div>
+          <div class="flex flex-col justify-center p-8 md:p-16 gap-6">
+            <div class="flex items-center gap-3">
+              <span class="bg-primary-10 text-primary text-[10px] font-bold px-2 py-1 rounded tracking-tighter uppercase">{{ article.tags.first | default: 'Featured' }}</span>
+              <span class="text-slate-400 text-xs uppercase tracking-widest">{% if article.content contains 'minute' %}{{ article.content | strip_html | truncatewords: 250 | size | divided_by: 200 | append: ' Min Read' }}{% else %}12 Min Read{% endif %}</span>
+            </div>
+            <h2 class="text-midnight dark:text-slate-100 text-3xl md:text-4xl font-semibold leading-tight tracking-tight">{{ article.title }}</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed">
+              {{ article.content | strip_html | truncatewords: 30 }}
+            </p>
+            <div class="pt-4">
+              <a href="{{ article.url }}" class="inline-flex items-center gap-2 group text-midnight dark:text-primary font-bold tracking-widest uppercase text-xs">
+                Read Full Article 
+                <span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform rotate-180" style="direction: rtl;">arrow_right_alt</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% else %}
+       <!-- Fallback styling logic for design review using schema blocks -->
+       <section class="mb-20 container-type-inline-size">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800">
+          <div class="h-[400px] md:h-full bg-center bg-no-repeat bg-cover" style="background-image: url('{{ section.settings.fallback_featured_image | image_url: width: 800 | default: "https://lh3.googleusercontent.com/aida-public/AB6AXuAgmpe4-ZABuUu4weK1e0-cR_lnvxlXZ8N0x4qjJQuBHG-cOyrRHtSIshHwQXtmk1fSsxDXl_OI1P2o6TDiGYQRK3V6hnKycf4pIAYNG0aPtJEpJhoQ-y3KbNXjcEVg0OXgMon9txwSRK79usSdm8YuxBvbC0PiTidDLZqVnuQqlRBR3yuWzCH-xtI9lxOQk1BNZCDZmhefwvmFGdvMfmkr4mL3VBCHAuIylSTg074cH7bs59A2y4Jp7Xu7iAPCxVD6Cm-jsdSuWXs" }}');"></div>
+          <div class="flex flex-col justify-center p-8 md:p-16 gap-6">
+            <div class="flex items-center gap-3">
+              <span class="bg-primary-10 text-primary text-[10px] font-bold px-2 py-1 rounded tracking-tighter uppercase">Science</span>
+              <span class="text-slate-400 text-xs uppercase tracking-widest">12 Min Read</span>
+            </div>
+            <h2 class="text-midnight dark:text-slate-100 text-3xl md:text-4xl font-semibold leading-tight tracking-tight">The Science of Glow: Understanding Cellular Vitality</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed">
+                How mitochondrial health directly impacts your skin's radiance. Discover the latest research on ATP production and why cellular energy is the ultimate secret to a luminous, age-defying complexion.
+            </p>
+            <div class="pt-4">
+              <a href="#" class="inline-flex items-center gap-2 group text-midnight dark:text-primary font-bold tracking-widest uppercase text-xs">
+                Read Full Article 
+                <span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform rotate-180" style="direction: rtl;">arrow_right_alt</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- Latest Stories Grid -->
+    <div class="flex items-baseline justify-between mb-8">
+      <h3 class="text-2xl font-bold text-midnight dark:text-slate-100 tracking-tight">{{ section.settings.grid_heading }}</h3>
+      <a href="{{ section.settings.view_all_link }}" class="text-sm text-primary font-semibold hover:underline">View All</a>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for block in section.blocks %}
+        {% if block.type == 'article_card' %}
+          <a href="{{ block.settings.link }}" class="group cursor-pointer">
+            <div class="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-slate-100">
+              <div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105" style="background-image: url('{{ block.settings.image | image_url: width: 600 }}');"></div>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-primary text-[10px] font-bold tracking-widest uppercase">{{ block.settings.tag }}</span>
+              <span class="text-slate-400 text-[10px] uppercase">{{ block.settings.date }}</span>
+            </div>
+            <h4 class="text-midnight dark:text-slate-100 text-xl font-bold leading-snug mb-3 group-hover:text-primary transition-colors">{{ block.settings.title }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-3 leading-relaxed">
+                {{ block.settings.excerpt }}
+            </p>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Newsletter CTA -->
+    <section class="mt-24 p-8 md:p-16 rounded-3xl bg-midnight text-white flex flex-col items-center text-center gap-8 relative overflow-hidden">
+      <!-- Glow effects -->
+      <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-primary neoglyn-journal__blur"></div>
+        <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-primary neoglyn-journal__blur"></div>
+      </div>
+      
+      <div class="z-10">
+        <span class="text-primary font-bold tracking-[0.3em] uppercase text-xs mb-4 block">{{ section.settings.newsletter_tag }}</span>
+        <h2 class="text-3xl md:text-5xl font-light mb-6 tracking-tight">{{ section.settings.newsletter_heading }}</h2>
+        <p class="text-slate-300 max-w-lg mx-auto mb-10">
+           {{ section.settings.newsletter_text }}
+        </p>
+        
+        {% form 'customer', class: 'flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto' %}
+          <input type="hidden" name="contact[tags]" value="newsletter, journal">
+          <input type="email" name="contact[email]" class="flex-1 bg-white/10 border-white/20 rounded-lg px-6 py-4 focus:outline-none focus:border-primary placeholder:text-slate-500 text-white" placeholder="Your email address" required />
+          <button type="submit" class="bg-primary text-midnight font-bold py-4 px-8 rounded-lg hover:bg-white transition-colors duration-300 whitespace-nowrap uppercase tracking-widest text-xs">Sign Up</button>
+        {% endform %}
+      </div>
+    </section>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Journal",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pre_heading",
+      "label": "Pre-heading",
+      "default": "The Perspective"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Journal"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "A curated collection of scientific breakthroughs and elevated rituals designed for the modern skincare enthusiast."
+    },
+    {
+       "type": "header",
+       "content": "Featured Article"
+    },
+    {
+      "type": "article",
+      "id": "featured_article",
+      "label": "Featured Article (Optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_featured_image",
+      "label": "Fallback Static Image"
+    },
+    {
+       "type": "header",
+       "content": "Recent Insights Grid"
+    },
+    {
+      "type": "text",
+      "id": "grid_heading",
+      "label": "Grid Heading",
+      "default": "Recent Insights"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+       "type": "header",
+       "content": "Newsletter CTA"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_tag",
+      "label": "CTA Tag",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "CTA Heading",
+      "default": "Join the Inner Circle"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "CTA Description",
+      "default": "Receive exclusive access to clinical studies, early product launches, and advanced self-care protocols directly in your inbox."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Navigation Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    },
+    {
+      "type": "article_card",
+      "name": "Mock Article Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Article Image"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Category Tag",
+          "default": "Rituals"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "May 14, 2024"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Article Title",
+          "default": "Evening Rituals: Creating a Sanctuary for Recovery"
+        },
+        {
+          "type": "textarea",
+          "id": "excerpt",
+          "label": "Article Excerpt",
+          "default": "Establishing a nightly routine that goes beyond cleansing. Explore sensory experiences that prime your skin and mind for deep overnight repair."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Article Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Journal",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Latest", "link": "#" } },
+        { "type": "category", "settings": { "title": "Skincare Science", "link": "#" } },
+        { "type": "category", "settings": { "title": "Rituals", "link": "#" } },
+        { "type": "article_card", "settings": {} },
+        { "type": "article_card", "settings": {} },
+        { "type": "article_card", "settings": {} }
+      ]
+    }
+  ]
+}
+{% endschema %}

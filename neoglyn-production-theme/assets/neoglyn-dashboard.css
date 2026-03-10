@@ -1,0 +1,55 @@
+/* neoglyn-dashboard.css */
+
+.neoglyn-dashboard {
+  background-color: #f6f8f7; /* Default background-light */
+}
+
+.neoglyn-dashboard__sidebar {
+  min-height: calc(100vh - 80px); /* Adjust based on global header height if needed */
+}
+
+/* Utilities mapping from Tailwind classes logic */
+.bg-primary-10 {
+  background-color: rgba(130, 217, 185, 0.2);
+}
+
+.text-emerald-600 {
+  color: #059669; /* Tailwind emerald-600 */
+}
+
+.bg-emerald-50 {
+  background-color: #ecfdf5; /* Tailwind emerald-50 */
+}
+
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: 1px;
+  border-color: #f1f5f9;
+}
+
+.border-slate-100 {
+  border-color: #f1f5f9;
+}
+
+.border-slate-200 {
+  border-color: #e2e8f0;
+}
+
+.text-slate-400 {
+  color: #94a3b8;
+}
+
+.text-slate-500 {
+  color: #64748b;
+}
+
+.text-slate-600 {
+  color: #475569;
+}
+
+.bg-slate-50 {
+  background-color: #f8fafc;
+}
+
+.bg-slate-100 {
+  background-color: #f1f5f9;
+}

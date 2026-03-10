@@ -1,0 +1,86 @@
+/* neoglyn-referral.css */
+.neoglyn-referral {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media screen and (min-width: 750px) {
+  .neoglyn-referral {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+.bg-primary-5 {
+  background-color: rgba(130, 217, 185, 0.05); /* Tailwind primary/5 */
+}
+
+.bg-primary-10 {
+  background-color: rgba(130, 217, 185, 0.1); /* Tailwind primary/10 */
+}
+
+.bg-primary-20 {
+  background-color: rgba(130, 217, 185, 0.2); /* Tailwind primary/20 */
+}
+
+.border-primary-20 {
+  border-color: rgba(130, 217, 185, 0.2);
+}
+
+.text-green-500 {
+  color: #22c55e;
+}
+
+.bg-green-100 {
+  background-color: #dcfce7;
+}
+
+.text-green-700 {
+  color: #15803d;
+}
+
+.bg-amber-100 {
+  background-color: #fef3c7;
+}
+
+.text-amber-600 {
+  color: #d97706;
+}
+
+.text-amber-700 {
+  color: #b45309;
+}
+
+.bg-blue-50 {
+  background-color: #eff6ff;
+}
+
+.bg-blue-100 {
+  background-color: #dbeafe;
+}
+
+.text-blue-400 {
+  color: #60a5fa;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+
+.size-8 {
+  width: 2rem;
+  height: 2rem;
+}
+
+.size-12 {
+  width: 3rem;
+  height: 3rem;
+}
+
+.neoglyn-referral__hero {
+  background-color: var(--color-foreground);
+}
+
+.neoglyn-referral__link {
+  user-select: all;
+}

@@ -1,0 +1,17 @@
+/* neoglyn-about.css */
+
+.bg-primary-10 {
+  background-color: rgba(130, 217, 185, 0.1);
+}
+
+.bg-primary-20 {
+  background-color: rgba(130, 217, 185, 0.2);
+}
+
+.border-primary-20 {
+  border-color: rgba(130, 217, 185, 0.2);
+}
+
+.text-primary\/60 {
+  color: rgba(130, 217, 185, 0.6);
+}

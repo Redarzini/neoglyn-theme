@@ -1,0 +1,188 @@
+{{ 'neoglyn-product.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-product page-width section-{{ section.id }}-padding bg-white text-[#001F3F] font-display min-h-screen">
+  <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+    
+    <!-- Image Gallery -->
+    <div class="neoglyn-product__media flex flex-col gap-4 sticky top-24 h-fit">
+      {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+      <div class="aspect-square bg-[#f6f8f7] rounded-3xl overflow-hidden relative border border-slate-100">
+        {% if featured_media %}
+          <img src="{{ featured_media | image_url: width: 1000 }}" alt="{{ featured_media.alt | escape }}" class="w-full h-full object-cover object-center" loading="eager" width="{{ featured_media.width }}" height="{{ featured_media.height }}">
+        {% else %}
+           {{ 'product-1' | placeholder_svg_tag: 'w-full h-full text-slate-300 fill-current bg-slate-50 object-cover object-center' }}
+        {% endif %}
+      </div>
+      
+      {% if product.media.size > 1 %}
+        <div class="grid grid-cols-4 gap-4">
+          {% for media in product.media %}
+            <button class="aspect-square bg-[#f6f8f7] rounded-xl overflow-hidden border-2 {% if media == featured_media %}border-[#82D9B9]{% else %}border-transparent{% endif %} hover:border-[#82D9B9]/50 transition-colors">
+              <img src="{{ media | image_url: width: 200 }}" alt="{{ media.alt | escape }}" class="w-full h-full object-cover object-center" loading="lazy">
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Product Details -->
+    <div class="neoglyn-product__info flex flex-col pt-4 md:pt-10">
+      
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'vendor' -%}
+            <p class="text-sm font-bold tracking-widest uppercase text-slate-400 mb-2" {{ block.shopify_attributes }}>{{ product.vendor }}</p>
+            
+          {%- when 'title' -%}
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#001F3F] mb-4" {{ block.shopify_attributes }}>{{ product.title | escape }}</h1>
+            
+          {%- when 'price' -%}
+            <div class="flex items-end gap-4 mb-8" id="price-{{ section.id }}" {{ block.shopify_attributes }}>
+              <span class="text-2xl font-bold text-[#001F3F]">{{ product.selected_or_first_available_variant.price | money }}</span>
+              {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+                <s class="text-lg text-slate-400 font-medium">{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>
+                <span class="bg-[#82D9B9]/20 text-[#001F3F] text-xs font-bold px-2 py-1 rounded-full uppercase tracking-widest">Sale</span>
+              {% endif %}
+            </div>
+
+          {%- when 'description' -%}
+            <div class="text-[#001F3F]/70 text-lg leading-relaxed mb-10 prose prose-slate" {{ block.shopify_attributes }}>
+              {{ product.description }}
+            </div>
+
+          {%- when 'variant_picker' -%}
+            {%- unless product.has_only_default_variant -%}
+              <variant-selects class="block mb-8" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+                {%- for option in product.options_with_values -%}
+                  <div class="mb-6">
+                    <label class="block text-sm font-bold uppercase tracking-widest text-[#001F3F] mb-3">{{ option.name }}</label>
+                    <div class="flex flex-wrap gap-3">
+                      {%- for value in option.values -%}
+                        <label class="cursor-pointer group">
+                          <input type="radio" value="{{ value | escape }}" name="{{ option.name }}" class="peer sr-only" {% if option.selected_value == value %}checked{% endif %}>
+                          <div class="px-6 py-3 rounded-xl border-2 border-slate-200 text-[#001F3F] font-bold peer-checked:border-[#001F3F] peer-checked:bg-[#001F3F] peer-checked:text-white hover:border-[#001F3F]/50 transition-all text-sm">
+                            {{ value }}
+                          </div>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endfor -%}
+                <script type="application/json">{{ product.variants | json }}</script>
+              </variant-selects>
+            {%- endunless -%}
+
+          {%- when 'buy_buttons' -%}
+            <div class="flex flex-col gap-4 mb-10" {{ block.shopify_attributes }}>
+              {%- form 'product', product, id: 'product-form-installment', class: 'installment caption-large' -%}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <div class="flex items-center gap-4 hidden">
+                  <label class="text-sm font-bold text-[#001F3F]">Quantity</label>
+                  <input type="number" name="quantity" value="1" min="1" class="w-24 border-slate-200 rounded-lg text-center font-bold text-[#001F3F]">
+                </div>
+                <button type="submit" name="add" class="w-full bg-[#82D9B9] hover:bg-[#82D9B9]/80 text-[#001F3F] py-5 rounded-full font-bold text-lg tracking-widest uppercase transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#82D9B9]/20"
+                  {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                    <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+                    {%- if product.selected_or_first_available_variant.available -%}
+                      Add to Cart
+                    {%- else -%}
+                      Sold Out
+                    {%- endif -%}
+                </button>
+              {%- endform -%}
+            </div>
+            
+          {%- when 'features' -%}
+             <div class="grid grid-cols-2 gap-4 pt-8 border-t border-slate-100" {{ block.shopify_attributes }}>
+               <div class="flex items-center gap-3 text-[#001F3F]">
+                 <div class="size-10 rounded-full bg-[#f6f8f7] flex items-center justify-center">
+                   <span class="material-symbols-outlined text-sm">local_shipping</span>
+                 </div>
+                 <span class="text-sm font-bold">{{ block.settings.feature_1 }}</span>
+               </div>
+               <div class="flex items-center gap-3 text-[#001F3F]">
+                 <div class="size-10 rounded-full bg-[#f6f8f7] flex items-center justify-center">
+                   <span class="material-symbols-outlined text-sm">verified</span>
+                 </div>
+                 <span class="text-sm font-bold">{{ block.settings.feature_2 }}</span>
+               </div>
+             </div>
+        {%- endcase -%}
+      {%- endfor -%}
+      
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Product",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant Picker",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy Buttons",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "features",
+      "name": "Features Badges",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1 Text",
+          "default": "Free Worldwide Shipping"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2 Text",
+          "default": "2 Year Warranty"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Product",
+      "blocks": [
+        { "type": "vendor" },
+        { "type": "title" },
+        { "type": "price" },
+        { "type": "variant_picker" },
+        { "type": "buy_buttons" },
+        { "type": "description" },
+        { "type": "features" }
+      ]
+    }
+  ]
+}
+{% endschema %}

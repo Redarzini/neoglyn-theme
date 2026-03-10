@@ -1,0 +1,78 @@
+{{ 'neoglyn-flash-sale.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-flash-sale page-width section-{{ section.id }}-padding" style="--flash-bg: {{ section.settings.background_color }};">
+  <div class="neoglyn-flash-sale__glow"></div>
+  
+  <div class="neoglyn-flash-sale__content">
+    <div class="neoglyn-flash-sale__text-block">
+      <h2 class="neoglyn-flash-sale__title text-primary">{{ section.settings.heading }}</h2>
+      <p class="neoglyn-flash-sale__subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+    
+    <div class="neoglyn-flash-sale__timer">
+      <div class="neoglyn-flash-sale__timer-block">
+        <div class="neoglyn-flash-sale__timer-box"><span class="neoglyn-flash-sale__timer-number text-primary">02</span></div>
+        <span class="neoglyn-flash-sale__timer-label">Hours</span>
+      </div>
+      <div class="neoglyn-flash-sale__timer-separator text-primary">:</div>
+      <div class="neoglyn-flash-sale__timer-block">
+        <div class="neoglyn-flash-sale__timer-box"><span class="neoglyn-flash-sale__timer-number text-primary">45</span></div>
+        <span class="neoglyn-flash-sale__timer-label">Minutes</span>
+      </div>
+      <div class="neoglyn-flash-sale__timer-separator text-primary">:</div>
+      <div class="neoglyn-flash-sale__timer-block">
+        <div class="neoglyn-flash-sale__timer-box"><span class="neoglyn-flash-sale__timer-number text-primary">12</span></div>
+        <span class="neoglyn-flash-sale__timer-label">Seconds</span>
+      </div>
+    </div>
+    
+    <a href="{{ section.settings.button_link }}" class="btn btn--primary neoglyn-flash-sale__btn">
+      {{ section.settings.button_label }}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Flash Sale",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#121715"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Exclusive Flash Sale"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Save up to 40% on our exclusive luxury collections"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Claim Offer"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Flash Sale",
+      "category": "Promotion"
+    }
+  ]
+}
+{% endschema %}

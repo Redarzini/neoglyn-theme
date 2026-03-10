@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "quiz": {
+      "type": "neoglyn-skin-quiz",
+      "settings": {}
+    }
+  },
+  "order": [
+    "quiz"
+  ]
+}

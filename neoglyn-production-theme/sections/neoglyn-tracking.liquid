@@ -1,0 +1,353 @@
+{{ 'neoglyn-tracking.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-tracking page-width section-{{ section.id }}-padding bg-background-light dark:bg-background-dark text-midnight dark:text-slate-100 font-display min-h-screen">
+  <div class="flex flex-col w-full max-w-[800px] gap-8 mx-auto">
+    <!-- Page Header -->
+    <div class="flex flex-col gap-2">
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight">{{ section.settings.page_title }}</h1>
+      <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+        <span class="font-medium">Order ID:</span>
+        <span class="bg-primary/20 text-midnight dark:text-primary px-2 py-0.5 rounded text-sm font-bold">{{ section.settings.order_id | default: '#NG-882910291' }}</span>
+      </div>
+    </div>
+    
+    <!-- Status Card -->
+    <div class="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-primary/10">
+      <div class="flex flex-col gap-6">
+        <div class="flex justify-between items-end">
+          <div class="flex flex-col gap-1">
+            <span class="text-slate-500 dark:text-slate-400 text-sm uppercase tracking-wider font-bold">Current Status</span>
+            <p class="text-2xl font-bold text-midnight dark:text-primary">{{ section.settings.current_status }}</p>
+          </div>
+          <div class="text-right">
+            <span class="text-3xl font-bold text-midnight dark:text-slate-100">{{ section.settings.progress_percentage }}%</span>
+          </div>
+        </div>
+        <!-- Progress Bar -->
+        <div class="w-full h-3 bg-primary-10 rounded-full overflow-hidden">
+          <div class="h-full bg-primary rounded-full transition-all duration-500" style="width: {{ section.settings.progress_percentage }}%;"></div>
+        </div>
+        <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+          <span class="material-symbols-outlined text-primary">calendar_today</span>
+          <p class="text-sm font-medium">Estimated delivery: <span class="text-midnight dark:text-slate-100">{{ section.settings.estimated_date }}</span></p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tracking Timeline -->
+    <div class="flex flex-col gap-4 bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-primary/10">
+      <h3 class="text-lg font-bold text-midnight dark:text-slate-100 pb-2 border-b border-primary/10">{{ section.settings.timeline_title }}</h3>
+      <div class="relative flex flex-col pt-4">
+        {% for block in section.blocks %}
+          {% if block.type == 'timeline_item' %}
+            <div class="flex gap-4">
+              <div class="flex flex-col items-center">
+                {% if block.settings.is_active %}
+                  <div class="size-8 rounded-full bg-primary flex items-center justify-center text-midnight">
+                    <span class="material-symbols-outlined text-base font-bold">{{ block.settings.icon }}</span>
+                  </div>
+                  {% unless forloop.last %}
+                    <div class="w-0.5 h-12 bg-primary"></div>
+                  {% endunless %}
+                {% else %}
+                  <div class="size-8 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400">
+                    <span class="material-symbols-outlined text-base">{{ block.settings.icon }}</span>
+                  </div>
+                  {% unless forloop.last %}
+                    <div class="w-0.5 h-12 bg-slate-200 dark:bg-slate-700"></div>
+                  {% endunless %}
+                {% endif %}
+              </div>
+              <div class="flex flex-col pb-6">
+                <p class="{% if block.settings.is_active %}text-midnight dark:text-slate-100{% else %}text-slate-400 dark:text-slate-500{% endif %} font-bold">{{ block.settings.title }}</p>
+                <p class="{% if block.settings.is_active %}text-slate-500{% else %}text-slate-400{% endif %} text-sm {% if block.settings.is_italic %}italic{% endif %}">{{ block.settings.description }}</p>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    
+    <!-- Order Summary Section -->
+    <div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-primary/10">
+      <div class="p-6 border-b border-primary/10">
+        <h3 class="text-lg font-bold text-midnight dark:text-slate-100">{{ section.settings.summary_title }}</h3>
+      </div>
+      <div class="p-6 flex flex-col gap-4">
+        {% for block in section.blocks %}
+           {% if block.type == 'order_item' %}
+             <div class="flex items-center gap-4">
+              <div class="size-20 rounded-lg bg-background-light dark:bg-slate-800 flex-shrink-0 bg-cover bg-center border border-primary/10" style="background-image: url('{{ block.settings.image | image_url: width: 100 }}');"></div>
+              <div class="flex-1">
+                <p class="font-bold text-midnight dark:text-slate-100">{{ block.settings.title }}</p>
+                <p class="text-sm text-slate-500">{{ block.settings.variant }}</p>
+              </div>
+              <div class="text-right">
+                <p class="font-bold text-midnight dark:text-slate-100">{{ block.settings.price }}</p>
+                <p class="text-xs text-slate-500">Qty: {{ block.settings.quantity }}</p>
+              </div>
+            </div>
+           {% endif %}
+        {% endfor %}
+      </div>
+      <div class="bg-background-light-50 dark:bg-slate-800/50 p-6 flex flex-col gap-2">
+        <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+          <span>Subtotal</span>
+          <span>{{ section.settings.subtotal }}</span>
+        </div>
+        <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+          <span>Shipping</span>
+          <span class="text-primary font-bold">{{ section.settings.shipping }}</span>
+        </div>
+        <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+          <span>Estimated Taxes</span>
+          <span>{{ section.settings.taxes }}</span>
+        </div>
+        <div class="flex justify-between pt-2 border-t border-primary/10 mt-2">
+          <span class="font-bold text-midnight dark:text-slate-100">Total</span>
+          <span class="font-bold text-midnight dark:text-primary text-lg">{{ section.settings.total }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Map View Placeholder -->
+    <div class="rounded-xl overflow-hidden border border-primary/10 shadow-sm relative h-64 w-full bg-slate-200">
+      <div class="absolute inset-0 bg-cover bg-center opacity-80" style="background-image: url('{{ section.settings.map_image | image_url: width: 800 | default: "https://lh3.googleusercontent.com/aida-public/AB6AXuAptAJPEz8w9UpwRBDkV01klPLmM6_ZQpfuwudJKP3gdh7wRmpb8-tbgvvWbQOTvEMgbJi5CF9O-7GZO4cWPAf60gWJygwI3e2dpJUvxRO3MdWLakLMjepySDDwAwO3tp46Z2WHT5SYOSmqBsiwakvNkOlqjsGi83zsAA7LJxLZjiQExlkta09zV6nMPKXAadqJkNRg7OBOWtH4TmHHhxTf21VqXG2KLDg1mUbCAxRU8jOuXxyWfBSZkObn4BVKNitfbobkFy5huk4" }}');"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-midnight/40 to-transparent"></div>
+      <div class="absolute bottom-4 left-4 right-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm p-3 rounded-lg flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="size-8 rounded-full bg-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-midnight text-sm font-bold">navigation</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-slate-500 uppercase">Last Seen</p>
+            <p class="text-sm font-bold text-midnight dark:text-slate-100">{{ section.settings.last_seen_location }}</p>
+          </div>
+        </div>
+        <button class="text-primary text-sm font-bold hover:underline">View Live Map</button>
+      </div>
+    </div>
+    
+    <!-- Help/Support -->
+    <div class="flex flex-col items-center gap-4 py-8">
+      <p class="text-slate-500 dark:text-slate-400 text-sm">{{ section.settings.support_text }}</p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button class="px-6 py-2 rounded-full border border-primary text-midnight dark:text-primary font-bold hover:bg-primary-10 transition-colors">
+          {{ section.settings.support_btn_1 }}
+        </button>
+        <button class="px-6 py-2 rounded-full bg-primary text-midnight font-bold hover:brightness-95 transition-colors">
+          {{ section.settings.support_btn_2 }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Order Tracking",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page Title",
+      "default": "Track Your Order"
+    },
+    {
+      "type": "text",
+      "id": "order_id",
+      "label": "Order ID Override"
+    },
+    {
+       "type": "header",
+       "content": "Status Card"
+    },
+    {
+      "type": "text",
+      "id": "current_status",
+      "label": "Current Status Text",
+      "default": "On the way"
+    },
+    {
+      "type": "range",
+      "id": "progress_percentage",
+      "label": "Progress Percentage",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 65
+    },
+    {
+      "type": "text",
+      "id": "estimated_date",
+      "label": "Estimated Delivery Date",
+      "default": "Oct 24, 2023"
+    },
+    {
+      "type": "text",
+      "id": "timeline_title",
+      "label": "Timeline Title",
+      "default": "Shipment Activity"
+    },
+    {
+       "type": "header",
+       "content": "Order Summary"
+    },
+    {
+      "type": "text",
+      "id": "summary_title",
+      "label": "Summary Title",
+      "default": "Order Summary"
+    },
+    {
+      "type": "text",
+      "id": "subtotal",
+      "label": "Subtotal",
+      "default": "$249.00"
+    },
+    {
+      "type": "text",
+      "id": "shipping",
+      "label": "Shipping Cost",
+      "default": "FREE"
+    },
+    {
+      "type": "text",
+      "id": "taxes",
+      "label": "Estimated Taxes",
+      "default": "$19.92"
+    },
+    {
+      "type": "text",
+      "id": "total",
+      "label": "Total Amount",
+      "default": "$268.92"
+    },
+    {
+       "type": "header",
+       "content": "Map Component"
+    },
+    {
+      "type": "image_picker",
+      "id": "map_image",
+      "label": "Map Placeholder Image"
+    },
+    {
+      "type": "text",
+      "id": "last_seen_location",
+      "label": "Last Seen Location",
+      "default": "Main Distribution Center, Oakland"
+    },
+    {
+       "type": "header",
+       "content": "Help & Support"
+    },
+    {
+      "type": "text",
+      "id": "support_text",
+      "label": "Support Text",
+      "default": "Having trouble with your delivery?"
+    },
+    {
+      "type": "text",
+      "id": "support_btn_1",
+      "label": "Button 1 Text",
+      "default": "Contact Support"
+    },
+    {
+      "type": "text",
+      "id": "support_btn_2",
+      "label": "Button 2 Text",
+      "default": "Change Delivery Details"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "timeline_item",
+      "name": "Timeline Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon ID",
+          "default": "check"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Is Active/Completed?",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Status Title",
+          "default": "Order Placed"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Oct 20, 09:00 AM — Warehouse Alpha, SF"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_italic",
+          "label": "Make description italic?",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "order_item",
+      "name": "Order Item",
+      "settings": [
+         {
+           "type": "image_picker",
+           "id": "image",
+           "label": "Product Image"
+         },
+         {
+           "type": "text",
+           "id": "title",
+           "label": "Product Title",
+           "default": "Neoglyn Sonic Max"
+         },
+         {
+           "type": "text",
+           "id": "variant",
+           "label": "Variant Details",
+           "default": "Midnight Blue • Wireless"
+         },
+         {
+           "type": "text",
+           "id": "price",
+           "label": "Price",
+           "default": "$249.00"
+         },
+         {
+           "type": "number",
+           "id": "quantity",
+           "label": "Quantity",
+           "default": 1
+         }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Order Tracking",
+      "blocks": [
+        { "type": "timeline_item", "settings": { "title": "Order Placed", "description": "Oct 20, 09:00 AM — Warehouse Alpha, SF", "is_active": true, "icon": "check" } },
+        { "type": "timeline_item", "settings": { "title": "Order Processed", "description": "Oct 20, 02:30 PM — Quality Check Passed", "is_active": true, "icon": "check" } },
+        { "type": "timeline_item", "settings": { "title": "Shipped", "description": "Oct 21, 11:15 AM — In transit to sorting center", "is_active": true, "icon": "local_shipping" } },
+        { "type": "timeline_item", "settings": { "title": "Out for Delivery", "description": "Expected Monday, Oct 24", "is_active": false, "icon": "home", "is_italic": true } },
+        { "type": "order_item", "settings": {} }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,122 @@
+{{ 'neoglyn-skin-quiz.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-skin-quiz page-width section-{{ section.id }}-padding bg-background-light text-midnight">
+  <div class="neoglyn-skin-quiz__container">
+    
+    <div class="neoglyn-skin-quiz__progress">
+      <div class="neoglyn-skin-quiz__progress-header">
+        <div>
+          <span class="neoglyn-skin-quiz__pre-title text-primary">{{ section.settings.pre_title }}</span>
+          <h3 class="neoglyn-skin-quiz__title">{{ section.settings.title }}</h3>
+        </div>
+        <p class="neoglyn-skin-quiz__step-text">Step 1 of {{ section.blocks.size | at_least: 1 }}</p>
+      </div>
+      <div class="neoglyn-skin-quiz__progress-bar bg-slate-100">
+        <div class="neoglyn-skin-quiz__progress-fill bg-primary" style="width: 20%;"></div>
+      </div>
+    </div>
+
+    <div class="neoglyn-skin-quiz__content">
+      <h1 class="neoglyn-skin-quiz__question">{{ section.settings.question }}</h1>
+      <p class="neoglyn-skin-quiz__description">{{ section.settings.description }}</p>
+    </div>
+
+    <form class="neoglyn-skin-quiz__form" action="#">
+      <div class="neoglyn-skin-quiz__options">
+        {% for block in section.blocks %}
+          <label class="neoglyn-skin-quiz__option-label" {{ block.shopify_attributes }}>
+            <div class="neoglyn-skin-quiz__option-info">
+              <div class="neoglyn-skin-quiz__option-icon">
+                <span class="material-symbols-outlined">{{ block.settings.icon | default: 'spa' }}</span>
+              </div>
+              <span class="neoglyn-skin-quiz__option-text">{{ block.settings.title }}</span>
+            </div>
+            <input type="radio" name="skin_concern" class="neoglyn-skin-quiz__radio" value="{{ block.settings.title | escape }}" {% if forloop.first %}checked{% endif %}>
+          </label>
+        {% endfor %}
+      </div>
+
+      <div class="neoglyn-skin-quiz__actions border-top-surface">
+        <button type="button" class="btn btn--secondary neoglyn-skin-quiz__btn-back">
+          <span class="material-symbols-outlined text-sm">arrow_back</span> Back
+        </button>
+        <button type="button" class="btn btn--primary neoglyn-skin-quiz__btn-next">
+          Next Step <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+      </div>
+    </form>
+    
+    <div class="neoglyn-skin-quiz__help">
+      <button class="neoglyn-skin-quiz__help-btn">
+        <span class="material-symbols-outlined text-base">help_outline</span> Why do we ask this?
+      </button>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Skin Quiz",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pre_title",
+      "label": "Pre Title",
+      "default": "Assessment"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Skin Profile"
+    },
+    {
+      "type": "text",
+      "id": "question",
+      "label": "Question",
+      "default": "What is your primary skin concern?"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Select the main issue you'd like to address with your custom routine. This helps us calibrate your formula."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "option",
+      "name": "Quiz Option",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Option Title"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon Name",
+          "default": "water_drop"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Skin Quiz",
+      "blocks": [
+        { "type": "option", "settings": { "title": "Dryness & Dehydration", "icon": "water_drop" } },
+        { "type": "option", "settings": { "title": "Fine Lines & Wrinkles", "icon": "auto_awesome" } },
+        { "type": "option", "settings": { "title": "Acne & Blemishes", "icon": "emergency_home" } },
+        { "type": "option", "settings": { "title": "Uneven Tone & Dark Spots", "icon": "contrast" } },
+        { "type": "option", "settings": { "title": "Sensitivity & Redness", "icon": "medical_services" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+/* neoglyn-journal.css */
+
+.neoglyn-journal .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.neoglyn-journal .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.bg-primary-10 {
+  background-color: rgba(130, 217, 185, 0.1);
+}
+
+.neoglyn-journal__blur {
+  filter: blur(100px);
+}

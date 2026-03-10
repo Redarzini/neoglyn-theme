@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "referral": {
+      "type": "neoglyn-referral",
+      "settings": {}
+    }
+  },
+  "order": [
+    "referral"
+  ]
+}

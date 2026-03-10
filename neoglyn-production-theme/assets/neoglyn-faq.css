@@ -1,0 +1,39 @@
+/* neoglyn-faq.css */
+
+.neoglyn-faq .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.neoglyn-faq .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.bg-primary-10 {
+  background-color: rgba(130, 217, 185, 0.1);
+}
+
+.bg-primary-20 {
+  background-color: rgba(130, 217, 185, 0.2);
+}
+
+.border-primary-20 {
+  border-color: rgba(130, 217, 185, 0.2);
+}
+
+/* Accordion Animation & Styling */
+.neoglyn-faq__details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.neoglyn-faq__details[open] summary ~ * {
+  animation: sweep .3s ease-in-out;
+}
+
+@keyframes sweep {
+  0%    {opacity: 0; margin-top: -10px}
+  100%  {opacity: 1; margin-top: 0px}
+}
+
+.neoglyn-faq__details[open] .neoglyn-faq__icon {
+  transform: rotate(180deg);
+}

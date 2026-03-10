@@ -1,0 +1,318 @@
+{{ 'neoglyn-faq.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-faq bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen">
+  
+  <!-- Hero Search Section -->
+  <div class="bg-midnight dark:bg-black py-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6">{{ section.settings.hero_heading }}</h2>
+      <div class="relative max-w-2xl mx-auto">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="flex items-center bg-white rounded-xl shadow-2xl overflow-hidden p-1">
+          <div class="pl-4 pr-2 text-slate-400">
+            <span class="material-symbols-outlined">search</span>
+          </div>
+          <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.search_placeholder }}" class="w-full border-none focus:ring-0 text-slate-800 text-lg py-4 placeholder:text-slate-400" />
+          <input type="hidden" name="options[prefix]" value="last" />
+          <button type="submit" class="bg-primary hover:brightness-95 text-midnight font-bold py-3 px-8 rounded-lg transition-all mx-1">
+            Search
+          </button>
+        </form>
+      </div>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <span class="text-slate-400 text-sm">Popular:</span>
+        {% for block in section.blocks %}
+          {% if block.type == 'popular_search' %}
+            <a href="{{ routes.search_url }}?q={{ block.settings.term | url_encode }}&options%5Bprefix%5D=last" class="text-primary hover:underline text-sm font-medium">{{ block.settings.term }}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Categories -->
+  <div class="bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 sticky top-16 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex overflow-x-auto no-scrollbar gap-8">
+         {% for block in section.blocks %}
+           {% if block.type == 'nav_category' %}
+             <a href="{{ block.settings.link }}" class="flex items-center gap-2 border-b-2 {% if forloop.first %}border-primary text-midnight dark:text-white{% else %}border-transparent text-slate-500 hover:text-primary{% endif %} py-5 px-1 font-bold whitespace-nowrap transition-all">
+                <span class="material-symbols-outlined {% if forloop.first %}text-primary{% endif %}">{{ block.settings.icon }}</span>
+                {{ block.settings.title }}
+             </a>
+           {% endif %}
+         {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Area -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <!-- Sidebar -->
+      <aside class="hidden lg:block lg:col-span-3">
+        <h3 class="text-midnight dark:text-white font-bold text-lg mb-6">{{ section.settings.sidebar_heading }}</h3>
+        <ul class="space-y-4">
+          {% for block in section.blocks %}
+            {% if block.type == 'sidebar_category' %}
+              <li>
+                <a href="{{ block.settings.link }}" class="flex justify-between items-center {% if forloop.first %}text-primary font-bold group{% else %}text-slate-600 hover:text-primary dark:text-slate-400 transition-colors{% endif %}">
+                  <span>{{ block.settings.title }}</span>
+                  <span class="{% if forloop.first %}bg-primary-20{% else %}bg-slate-100 dark:bg-slate-800{% endif %} text-xs px-2 py-1 rounded-full">{{ block.settings.count }}</span>
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        
+        <div class="mt-12 p-6 bg-primary-10 rounded-xl border border-primary-20">
+          <h4 class="text-midnight dark:text-white font-bold mb-2">{{ section.settings.support_heading }}</h4>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">{{ section.settings.support_text }}</p>
+          <a href="{{ section.settings.support_link }}" class="block text-center w-full bg-midnight text-white dark:bg-primary dark:text-midnight py-2 rounded-lg font-bold text-sm hover:brightness-95 transition-all">
+            {{ section.settings.support_btn_text }}
+          </a>
+        </div>
+      </aside>
+
+      <!-- FAQ Content -->
+      <div class="lg:col-span-9">
+        <h2 class="text-3xl font-extrabold text-midnight dark:text-white mb-8">{{ section.settings.main_category_heading }}</h2>
+        <div class="space-y-4">
+          
+          {% for block in section.blocks %}
+            {% if block.type == 'faq_item' %}
+              <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden group">
+                <details class="neoglyn-faq__details w-full">
+                  <summary class="flex items-center justify-between p-6 text-left cursor-pointer list-none">
+                    <span class="font-bold text-lg text-midnight dark:text-white flex-1 pr-4">{{ block.settings.question }}</span>
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 neoglyn-faq__icon shrink-0">expand_more</span>
+                  </summary>
+                  <div class="px-6 pb-6 pt-2">
+                    <div class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm lg:text-base">
+                      {{ block.settings.answer }}
+                    </div>
+                  </div>
+                </details>
+              </div>
+            {% endif %}
+          {% endfor %}
+          
+        </div>
+
+        <!-- Recommended Articles -->
+        <div class="mt-16">
+          <h3 class="text-2xl font-bold text-midnight dark:text-white mb-6">{{ section.settings.guides_heading }}</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for block in section.blocks %}
+              {% if block.type == 'guide' %}
+                <a href="{{ block.settings.link }}" class="group cursor-pointer block">
+                  <div class="relative h-48 rounded-xl overflow-hidden mb-4 bg-slate-100">
+                    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent flex items-end p-4">
+                      <span class="text-white font-bold text-sm">{{ block.settings.tag }}</span>
+                    </div>
+                  </div>
+                  <h4 class="font-bold text-midnight dark:text-white group-hover:text-primary transition-colors">{{ block.settings.title }}</h4>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+       "type": "header",
+       "content": "Hero Search"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero Heading",
+      "default": "How can we help you today?"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Placeholder",
+      "default": "Search for questions, orders, or device tutorials..."
+    },
+    {
+       "type": "header",
+       "content": "Sidebar"
+    },
+    {
+      "type": "text",
+      "id": "sidebar_heading",
+      "label": "Sidebar Heading",
+      "default": "Article Categories"
+    },
+    {
+      "type": "text",
+      "id": "support_heading",
+      "label": "Support Block Heading",
+      "default": "Need direct help?"
+    },
+    {
+      "type": "textarea",
+      "id": "support_text",
+      "label": "Support Text",
+      "default": "Our beauty experts are available 24/7 for you."
+    },
+    {
+      "type": "text",
+      "id": "support_btn_text",
+      "label": "Support Button Text",
+      "default": "Contact Support"
+    },
+    {
+      "type": "url",
+      "id": "support_link",
+      "label": "Support Button Link"
+    },
+    {
+       "type": "header",
+       "content": "Main Content"
+    },
+    {
+      "type": "text",
+      "id": "main_category_heading",
+      "label": "Active Category Heading",
+      "default": "Device Use & Setup"
+    },
+    {
+      "type": "text",
+      "id": "guides_heading",
+      "label": "Guides Section Heading",
+      "default": "Popular Support Guides"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "popular_search",
+      "name": "Popular Search Term",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "term",
+          "label": "Search Term"
+        }
+      ]
+    },
+    {
+      "type": "nav_category",
+      "name": "Top Nav Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Name"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon Name"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    },
+    {
+      "type": "sidebar_category",
+      "name": "Sidebar Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Name"
+        },
+        {
+          "type": "text",
+          "id": "count",
+          "label": "Article Count",
+          "default": "5"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I charge my device?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Connect the USB-C charging cable provided in the box.</p>"
+        }
+      ]
+    },
+    {
+      "type": "guide",
+      "name": "Support Guide",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Thumbnail Image"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Badge Text",
+          "default": "Starter Guide"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Guide Title",
+          "default": "Everything you need to know"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Guide Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn FAQ",
+      "blocks": [
+        { "type": "popular_search", "settings": { "term": "Resetting Glyn Pro" } },
+        { "type": "popular_search", "settings": { "term": "International Shipping" } },
+        { "type": "nav_category", "settings": { "title": "Device Use", "icon": "vibration", "link": "#" } },
+        { "type": "nav_category", "settings": { "title": "Shipping & Returns", "icon": "local_shipping", "link": "#" } },
+        { "type": "sidebar_category", "settings": { "title": "Device Setup", "count": "12", "link": "#" } },
+        { "type": "faq_item", "settings": { "question": "How do I charge my Neoglyn Glyn Pro for the first time?", "answer": "<p>Before your first use, connect the USB-C charging cable provided in the box to a standard 5V adapter. Charging typically takes 2 hours for a full cycle. The LED indicator will pulse mint while charging and remain solid when fully charged.</p>" } },
+        { "type": "faq_item", "settings": { "question": "Is the device waterproof and safe for shower use?", "answer": "<p>The Glyn Pro is water-resistant (IPX5), meaning it can withstand splashes and can be rinsed under the tap for cleaning. However, it should not be fully submerged or used in the shower.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

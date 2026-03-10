@@ -1,0 +1,136 @@
+{{ 'neoglyn-collection.css' | asset_url | stylesheet_tag }}
+
+<div class="neoglyn-collection page-width section-{{ section.id }}-padding bg-white text-[#001F3F] font-display min-h-screen">
+  <div class="max-w-[1400px] mx-auto py-16">
+    
+    <!-- Collection Header -->
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-16 border-b border-slate-100 pb-8">
+      <div class="flex flex-col gap-4 max-w-2xl">
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-[#001F3F]">{{ collection.title | default: 'All Products' }}</h1>
+        {% if collection.description != blank %}
+          <p class="text-lg text-[#001F3F]/70 leading-relaxed">{{ collection.description }}</p>
+        {% endif %}
+      </div>
+      <div class="text-[#001F3F]/50 font-bold uppercase tracking-widest text-sm">
+        {{ collection.all_products_count | default: 0 }} Results
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    {% paginate collection.products by section.settings.products_per_page %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-{{ section.settings.columns_desktop }} gap-8 lg:gap-12">
+        {%- for product in collection.products -%}
+          <a href="{{ product.url }}" class="group flex flex-col gap-4">
+            <div class="aspect-[4/5] bg-[#f6f8f7] rounded-3xl overflow-hidden relative border border-slate-100 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-slate-200/50 group-hover:-translate-y-2">
+              {%- if product.featured_media -%}
+                <img src="{{ product.featured_media | image_url: width: 600 }}" alt="{{ product.featured_media.alt | escape }}" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" loading="lazy">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'w-full h-full text-slate-300 fill-current bg-slate-50 object-cover object-center transition-transform duration-700 group-hover:scale-110' }}
+              {%- endif -%}
+              
+              <!-- Badges -->
+              <div class="absolute top-4 left-4 flex flex-col gap-2">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="bg-[#82D9B9] text-[#001F3F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-sm">Sale</span>
+                {%- endif -%}
+                {%- for tag in product.tags -%}
+                  {%- if tag contains 'badge:' -%}
+                    <span class="bg-white text-[#001F3F] text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-sm">{{ tag | split: ':' | last }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              <!-- Quick Add Hover Button -->
+              <div class="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <div class="bg-white/90 backdrop-blur-md text-[#001F3F] py-4 rounded-2xl font-bold tracking-widest uppercase text-xs text-center border border-white flex justify-center items-center gap-2">
+                  <span>View Details</span> <span class="material-symbols-outlined text-[16px]">visibility</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Detail Info -->
+            <div class="flex flex-col gap-1 px-2">
+              <h3 class="text-xl font-bold text-[#001F3F] group-hover:text-[#82D9B9] transition-colors line-clamp-1">{{ product.title | escape }}</h3>
+              <div class="flex items-center gap-3">
+                <span class="text-lg font-bold text-[#001F3F]">{{ product.price | money }}</span>
+                {%- if product.compare_at_price > product.price -%}
+                  <s class="text-sm font-medium text-slate-400">{{ product.compare_at_price | money }}</s>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+        {%- else -%}
+          <!-- Empty State -->
+          <div class="col-span-full py-24 text-center">
+            <h2 class="text-2xl font-bold text-[#001F3F] mb-4">No products found in this collection.</h2>
+            <p class="text-slate-500">Try checking back later or exploring our other collections.</p>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <!-- Pagination -->
+      {%- if paginate.pages > 1 -%}
+        <div class="mt-20 flex justify-center">
+          <nav class="flex items-center gap-2">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="size-12 rounded-full border border-slate-200 flex items-center justify-center text-[#001F3F] hover:bg-[#82D9B9] hover:border-[#82D9B9] transition-colors">
+                <span class="material-symbols-outlined">arrow_back</span>
+              </a>
+            {%- endif -%}
+            
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="size-12 rounded-full border border-slate-200 flex items-center justify-center text-[#001F3F] font-bold hover:bg-slate-50 transition-colors">{{ part.title }}</a>
+              {%- else -%}
+                {%- if part.title == paginate.current_page -%}
+                  <span class="size-12 rounded-full bg-[#001F3F] flex items-center justify-center text-white font-bold">{{ part.title }}</span>
+                {%- else -%}
+                  <span class="size-12 rounded-full flex items-center justify-center text-slate-400 font-bold">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="size-12 rounded-full border border-slate-200 flex items-center justify-center text-[#001F3F] hover:bg-[#82D9B9] hover:border-[#82D9B9] transition-colors">
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </a>
+            {%- endif -%}
+          </nav>
+        </div>
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Neoglyn Collection Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "default": 12,
+      "label": "Products per page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Number of columns on desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Neoglyn Collection Grid"
+    }
+  ]
+}
+{% endschema %}

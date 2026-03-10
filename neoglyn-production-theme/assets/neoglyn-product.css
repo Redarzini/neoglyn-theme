@@ -1,0 +1,26 @@
+/* neoglyn-product.css */
+
+.neoglyn-product {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media screen and (min-width: 990px) {
+  .neoglyn-product {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.prose p {
+  margin-bottom: 1.5rem;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose strong {
+  color: #001F3F;
+  font-weight: 800;
+}

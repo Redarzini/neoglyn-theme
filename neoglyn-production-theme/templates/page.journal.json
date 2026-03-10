@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "journal": {
+      "type": "neoglyn-journal",
+      "settings": {}
+    }
+  },
+  "order": [
+    "journal"
+  ]
+}

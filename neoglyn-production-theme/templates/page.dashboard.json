@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "dashboard": {
+      "type": "neoglyn-dashboard",
+      "settings": {}
+    }
+  },
+  "order": [
+    "dashboard"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "faq": {
+      "type": "neoglyn-faq",
+      "settings": {}
+    }
+  },
+  "order": [
+    "faq"
+  ]
+}
