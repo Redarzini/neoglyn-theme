@@ -24,6 +24,27 @@
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
 
+    <!-- Tailwind CSS CDN for dynamic styling of the Neoglyn layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              midnight: '#001F3F',
+              primary: '#82D9B9',
+              'background-light': '#F8F9FA',
+              'background-dark': '#0f172a',
+            },
+            fontFamily: {
+              display: ['Manrope', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
 
